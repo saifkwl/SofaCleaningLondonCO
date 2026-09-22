@@ -17,7 +17,7 @@ const navLinks = [
 ];
 ---
 
-<header class="sticky top-0 z-40 border-b border-sand-200/80 bg-sand-50/92 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-sand-200/80 bg-sand-50">
   <div class="container-page flex h-[4.5rem] items-center justify-between gap-4">
     <a href="/" class="shrink-0" aria-label={`${site.name} — home`}>
       <Logo />
@@ -73,14 +73,14 @@ const navLinks = [
           </svg>
         </summary>
         <div
-          class="absolute right-0 top-14 max-h-[75vh] w-[min(21rem,85vw)] overflow-y-auto rounded-3xl border border-sand-200 bg-sand-50 p-5 shadow-pop"
+          class="fixed inset-x-0 top-[4.5rem] z-50 max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-sand-200 bg-sand-50 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-pop"
         >
           <nav aria-label="Mobile">
             <ul class="space-y-1">
               {
                 navLinks.map((l) => (
                   <li>
-                    <a href={l.href} class="block rounded-xl px-3 py-2.5 font-medium text-ink-950 hover:bg-sand-100">
+                    <a href={l.href} class="block touch-manipulation rounded-xl px-3 py-3.5 text-lg font-medium text-ink-950 active:bg-sand-200">
                       {l.label}
                     </a>
                   </li>
@@ -94,7 +94,7 @@ const navLinks = [
               {
                 services.slice(0, 5).map((s) => (
                   <li>
-                    <a href={`/services/${s.slug}/`} class="block rounded-xl px-3 py-2 text-sm text-ink-800 hover:bg-sand-100">
+                    <a href={`/services/${s.slug}/`} class="block touch-manipulation rounded-xl px-3 py-3 text-ink-800 active:bg-sand-200">
                       {s.nav}
                     </a>
                   </li>
@@ -108,7 +108,7 @@ const navLinks = [
               {
                 areas.map((a) => (
                   <li>
-                    <a href={`/areas/${a.slug}/`} class="inline-block rounded-full bg-sand-100 px-3 py-1.5 text-sm text-ink-800 hover:bg-sand-200">
+                    <a href={`/areas/${a.slug}/`} class="inline-block touch-manipulation rounded-full bg-sand-100 px-4 py-2.5 text-ink-800 active:bg-sand-300">
                       {a.name}
                     </a>
                   </li>
@@ -117,7 +117,7 @@ const navLinks = [
             </ul>
             <a
               href="/get-a-quote/"
-              class="mt-5 block rounded-full bg-ink-950 px-4 py-3 text-center font-bold text-sand-50"
+              class="mt-5 block touch-manipulation rounded-full bg-ink-950 px-4 py-4 text-center font-bold text-sand-50"
             >
               Get a price
             </a>
@@ -129,15 +129,40 @@ const navLinks = [
 </header>
 
 <script is:inline>
-  // Close the mobile menu on outside click and on Escape.
   (() => {
     const nav = document.getElementById('mobile-nav');
     if (!nav) return;
-    document.addEventListener('click', (e) => {
-      if (nav.open && !nav.contains(e.target)) nav.open = false;
+
+    // Navigate explicitly rather than leaving it to the link's default action.
+    // On Android Chrome a tap inside the open panel could be swallowed before
+    // the browser acted on it, closing the menu without going anywhere.
+    nav.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href]');
+      if (!link || !nav.contains(link)) return;
+      e.preventDefault();
+      nav.open = false;
+      window.location.href = link.href;
     });
+
+    // Outside taps close it. composedPath is reliable where target is not.
+    document.addEventListener(
+      'pointerdown',
+      (e) => {
+        if (nav.open && !e.composedPath().includes(nav)) nav.open = false;
+      },
+      true
+    );
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') nav.open = false;
+      if (e.key === 'Escape' && nav.open) {
+        nav.open = false;
+        nav.querySelector('summary')?.focus();
+      }
     });
+
+    // Body scroll lock while the sheet is open.
+    new MutationObserver(() => {
+      document.body.style.overflow = nav.open ? 'hidden' : '';
+    }).observe(nav, { attributes: true, attributeFilter: ['open'] });
   })();
 </script>
