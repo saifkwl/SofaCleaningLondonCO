@@ -11,9 +11,21 @@ interface Props {
   eager?: boolean;
   /** Caption colour, for sliders placed on the dark teal background */
   tone?: 'dark' | 'light';
+  /** Widest the frame is ever displayed, so the right sizes are generated */
+  sizes?: string;
 }
 
-const { id, label, caption, beforeAlt, afterAlt, eager = false, tone = 'dark' } = Astro.props;
+const {
+  id,
+  label,
+  caption,
+  beforeAlt,
+  afterAlt,
+  eager = false,
+  tone = 'dark',
+  sizes = '(min-width: 1024px) 30rem, (min-width: 640px) 46vw, 92vw',
+} = Astro.props;
+
 const captionClass = tone === 'light' ? 'text-sand-200/80' : 'text-ink-800';
 const labelClass = tone === 'light' ? 'text-sand-50' : 'text-ink-950';
 
@@ -26,32 +38,57 @@ const after = files[`../assets/gallery/${id}-after.jpg`]?.default;
 if (!before || !after) {
   throw new Error(`BeforeAfter: missing image pair for "${id}"`);
 }
+
+/**
+ * These are noisy phone photographs of carpet and fabric, which WebP encodes
+ * expensively. Quality 58 is visually indistinguishable here and roughly
+ * a quarter of the bytes of the default.
+ */
+const MAX_W = 860;
+const imgProps = {
+  widths: [340, 560, MAX_W],
+  sizes,
+  quality: 58,
+  format: 'webp' as const,
+};
+
+/**
+ * Without an explicit width, Astro points the fallback `src` at a full-size
+ * render of the original — 1536px wide for some of these phone photos, which
+ * srcset-aware browsers never use but crawlers and social scrapers do fetch.
+ */
+const dims = (img: ImageMetadata) => ({
+  width: MAX_W,
+  height: Math.round((MAX_W * img.height) / img.width),
+});
 ---
 
 <figure class="group">
   <div
-    class="ba relative overflow-hidden rounded-card bg-ink-900 shadow-lift"
+    class="ba relative touch-pan-y overflow-hidden rounded-card bg-ink-900 shadow-lift select-none"
     style={`aspect-ratio: ${before.width} / ${before.height};`}
   >
     <Image
       src={after}
       alt={afterAlt}
-      widths={[480, 800, 1100]}
-      sizes="(min-width: 1024px) 34rem, (min-width: 640px) 46vw, 92vw"
+      {...imgProps}
+      {...dims(after)}
       loading={eager ? 'eager' : 'lazy'}
       fetchpriority={eager ? 'high' : undefined}
       decoding={eager ? 'sync' : 'async'}
-      class="absolute inset-0 h-full w-full object-cover"
+      draggable={false}
+      class="pointer-events-none absolute inset-0 h-full w-full object-cover"
     />
     <div class="ba-clip absolute inset-0 overflow-hidden">
       <Image
         src={before}
         alt={beforeAlt}
-        widths={[480, 800, 1100]}
-        sizes="(min-width: 1024px) 34rem, (min-width: 640px) 46vw, 92vw"
+        {...imgProps}
+        {...dims(before)}
         loading={eager ? 'eager' : 'lazy'}
         decoding={eager ? 'sync' : 'async'}
-        class="ba-before absolute inset-0 h-full w-full object-cover"
+        draggable={false}
+        class="pointer-events-none absolute inset-0 h-full w-full object-cover"
       />
     </div>
 
@@ -64,9 +101,14 @@ if (!before || !after) {
       >After</span
     >
 
+    <span
+      class="ba-hint pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-ink-950/80 px-3.5 py-1.5 text-[0.7rem] font-semibold text-sand-50 transition-opacity duration-300"
+      >Drag to compare</span
+    >
+
     <span class="ba-handle pointer-events-none absolute inset-y-0 w-0.5 bg-sand-50/90">
       <span
-        class="absolute top-1/2 left-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-sand-50 shadow-pop"
+        class="absolute top-1/2 left-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-sand-50 shadow-pop"
       >
         <svg class="h-5 w-5 text-ink-950" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M7.5 6 4 10l3.5 4M12.5 6l3.5 4-3.5 4" />
@@ -74,13 +116,18 @@ if (!before || !after) {
       </span>
     </span>
 
+    <!--
+      Pointer events on the frame drive the drag, so mouse, touch and pen all
+      behave identically. The range input stays for keyboard and screen-reader
+      users but never receives pointer events.
+    -->
     <input
       type="range"
       min="0"
       max="100"
       value="50"
-      step="0.1"
-      class="ba-range absolute inset-0 h-full w-full cursor-ew-resize appearance-none bg-transparent"
+      step="1"
+      class="ba-range pointer-events-none absolute inset-0 h-full w-full cursor-ew-resize appearance-none bg-transparent"
       aria-label={`Reveal slider: ${label} before and after cleaning`}
     />
   </div>
@@ -101,19 +148,25 @@ if (!before || !after) {
     left: var(--pos);
     transform: translateX(-50%);
   }
-  /* The range input is an invisible control layered over the image. */
+  .ba.is-dragging {
+    cursor: ew-resize;
+  }
+  .ba.is-touched .ba-hint {
+    opacity: 0;
+  }
   .ba-range::-webkit-slider-thumb {
     appearance: none;
-    width: 3rem;
-    height: 3rem;
+    width: 0;
+    height: 0;
   }
   .ba-range::-moz-range-thumb {
-    width: 3rem;
-    height: 3rem;
+    width: 0;
+    height: 0;
     border: 0;
     background: transparent;
   }
-  .ba-range:focus-visible {
+  /* The input is invisible but still focusable, so show focus on the frame. */
+  .ba:has(.ba-range:focus-visible) {
     outline: 3px solid var(--color-zest-400);
     outline-offset: 3px;
   }
@@ -123,16 +176,58 @@ if (!before || !after) {
   (() => {
     if (window.__baInit) return;
     window.__baInit = true;
+
     const bind = () => {
-      document.querySelectorAll('.ba-range').forEach((input) => {
-        if (input.dataset.bound) return;
-        input.dataset.bound = '1';
-        const frame = input.closest('.ba');
-        const sync = () => frame.style.setProperty('--pos', input.value + '%');
-        input.addEventListener('input', sync);
-        sync();
+      document.querySelectorAll('.ba').forEach((frame) => {
+        if (frame.dataset.bound) return;
+        frame.dataset.bound = '1';
+
+        const input = frame.querySelector('.ba-range');
+        const apply = (pct) => {
+          const v = Math.max(0, Math.min(100, pct));
+          frame.style.setProperty('--pos', v + '%');
+          input.value = String(Math.round(v));
+        };
+        const fromEvent = (e) => {
+          const r = frame.getBoundingClientRect();
+          apply(((e.clientX - r.left) / r.width) * 100);
+        };
+
+        let dragging = false;
+
+        frame.addEventListener('pointerdown', (e) => {
+          dragging = true;
+          frame.classList.add('is-dragging', 'is-touched');
+          frame.setPointerCapture(e.pointerId);
+          fromEvent(e);
+          e.preventDefault();
+        });
+
+        frame.addEventListener('pointermove', (e) => {
+          if (!dragging) return;
+          fromEvent(e);
+          e.preventDefault();
+        });
+
+        const end = (e) => {
+          if (!dragging) return;
+          dragging = false;
+          frame.classList.remove('is-dragging');
+          if (frame.hasPointerCapture?.(e.pointerId)) frame.releasePointerCapture(e.pointerId);
+        };
+        frame.addEventListener('pointerup', end);
+        frame.addEventListener('pointercancel', end);
+
+        // Keyboard: arrow keys move the reveal line.
+        input.addEventListener('input', () => {
+          frame.classList.add('is-touched');
+          apply(Number(input.value));
+        });
+
+        apply(50);
       });
     };
+
     bind();
     document.addEventListener('astro:page-load', bind);
   })();
