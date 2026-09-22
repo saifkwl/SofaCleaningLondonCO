@@ -8,8 +8,8 @@ interface Props {
   context?: string;
 }
 const {
-  heading = 'Send us a photo. Get a fixed price back.',
-  body = 'A picture from the doorway is usually all we need. We reply with a price that does not change on the day, and we will tell you honestly if something will not come out.',
+  heading = 'Send us a photo. Get a straight answer.',
+  body = 'A picture from the doorway is usually all we need to give you a price range. We settle the exact figure on the phone or on WhatsApp, and we will tell you honestly if something will not come out.',
   context,
 } = Astro.props;
 
@@ -31,7 +31,7 @@ const message = context
     >
     </div>
     <div class="relative max-w-2xl">
-      <p class="eyebrow text-zest-400"><span class="h-px w-6 bg-zest-400"></span>Free quote</p>
+      <p class="eyebrow text-zest-400"><span class="h-px w-6 bg-zest-400"></span>Free estimate</p>
       <h2 class="mt-4 text-3xl font-semibold md:text-[2.6rem] md:leading-[1.1]">{heading}</h2>
       <p class="mt-5 text-lg leading-relaxed text-sand-200/85">{body}</p>
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">

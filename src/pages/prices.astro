@@ -9,8 +9,12 @@ import { site } from '../data/site';
 
 const priceFaqs = [
   {
-    q: 'Is the price you quote the price I pay?',
-    a: 'Yes. We quote a fixed price from your photo and description, and that is what you pay. If the job turns out to be materially bigger than the photo suggested — more seats, an extra room, heavy pet contamination we could not see — we tell you before we start work, not after we have finished.',
+    q: 'Why are the prices shown as ranges?',
+    a: 'Because an honest single figure is impossible without knowing your items. A three-seater in linen with a wine stain and a three-seater in polyester that just needs a freshen up are different jobs. The range tells you the realistic span; we agree your exact number on the phone or WhatsApp once we know what we are dealing with.',
+  },
+  {
+    q: 'How do I pay?',
+    a: 'On completion, once you have seen the result. Bank transfer or card. For commercial and letting-agent work we invoice on standard terms.',
   },
   {
     q: 'Is there a minimum charge?',
@@ -21,8 +25,8 @@ const priceFaqs = [
     a: 'No travel surcharge anywhere in Greater London, and no surcharge for flights of stairs — our machine stays at ground level and we run hoses up. Where a road charge such as the Congestion Charge applies to your address, it is itemised separately in your quote so you can see exactly what it is.',
   },
   {
-    q: 'How do I pay?',
-    a: 'On completion, once you have seen the result. Bank transfer or card. For commercial and letting-agent work we invoice on standard terms.',
+    q: 'Once we agree a price, can it change?',
+    a: 'No. Once we have discussed the job and agreed a figure, that is what you pay. The only time it would change is if what we find is materially different from what was described — more seats, an extra room, heavy pet contamination nobody mentioned — and in that case we tell you before we start work, never after we have finished.',
   },
   {
     q: 'Are evenings and weekends more expensive?',
@@ -55,16 +59,16 @@ const schema = [
 ---
 
 <Base
-  title="Sofa & Carpet Cleaning Prices London | Fixed Quotes"
-  description="Full price list for sofa, upholstery and carpet cleaning in London. Fabric and leather sofas, chairs, carpets, stairs, end of tenancy and commercial."
+  title="Sofa & Carpet Cleaning Prices London | Price Guide"
+  description="Price guide for sofa, upholstery and carpet cleaning in London. Typical ranges for sofas, chairs, carpets, stairs, end of tenancy and commercial work."
   schema={schema}
 >
   <PageHero
     eyebrow="Prices"
-    title="What it costs, written down"
-    lede="Starting prices for everything we do. The figure we quote from your photo is the figure you pay — we would rather lose a booking to an honest number than win one and argue about it on the doorstep."
+    title="What it costs, honestly"
+    lede="Typical price ranges for everything we do, so you know roughly where you stand before you ring. The exact figure depends on your items and we agree it with you on the phone or on WhatsApp — never on the doorstep."
     trail={[{ href: '/prices/', label: 'Prices' }]}
-    chips={['Fixed quotes', 'No travel surcharge', 'Pay on completion']}
+    chips={['Guide ranges', 'No travel surcharge', 'Pay on completion']}
   />
 
   <section class="container-page py-14 md:py-20">
@@ -78,19 +82,21 @@ const schema = [
             what "large" means.
           </p>
           <p>
-            Everything below is a starting price for a normally soiled item. Heavy pet
-            contamination, severe staining, or a fabric that has already been cleaned badly by
-            someone else takes longer, and we will tell you that when we quote rather than adding it
-            on afterwards.
+            Every figure below is a <strong>range, not a quote</strong>. Where your job lands inside
+            it depends on three things: the size of the piece, the fabric, and how heavily soiled it
+            is. Heavy pet contamination, severe staining, or a fabric somebody has already tried to
+            clean badly all take longer and sit at the top of the range.
           </p>
           <p>
-            The quickest way to a firm number is a photo. Stand in the doorway, get the whole piece
-            in frame, and send it on WhatsApp with your postcode.
+            So the ranges are here to tell you whether we are in your budget before you pick up the
+            phone. The actual number gets agreed when we speak — send a photo on WhatsApp with your
+            postcode, or just ring, and we will talk it through and give you a figure that then does
+            not change.
           </p>
         </div>
       </div>
       <div class="rounded-card border border-ink-950/10 bg-sand-100 p-8">
-        <h2 class="font-display text-xl font-semibold text-ink-950">What is always included</h2>
+        <h2 class="font-display text-xl font-semibold text-ink-950">Included at any price</h2>
         <ul class="mt-5 space-y-3">
           {
             [
@@ -100,6 +106,7 @@ const schema = [
               'Pile grooming and drying passes, not just an extraction pass',
               'An air mover set up on request, at no extra cost',
               'An honest answer about what will and will not come out',
+              'A price agreed before we book, that does not change on the day',
             ].map((i) => (
               <li class="flex items-start gap-3 leading-relaxed text-ink-900">
                 <svg class="mt-1 h-5 w-5 shrink-0 text-ink-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -116,7 +123,7 @@ const schema = [
 
   <section class="bg-sand-100 py-14 md:py-20">
     <div class="container-page">
-      <h2 class="font-display text-3xl font-semibold text-ink-950">Full price list</h2>
+      <h2 class="font-display text-3xl font-semibold text-ink-950">Full price guide</h2>
       <div class="mt-10 grid gap-6 lg:grid-cols-2">
         {
           services.map((s) => (
@@ -142,6 +149,6 @@ const schema = [
 
   <CtaBand
     heading="Want your exact number?"
-    body="Send a photo from the doorway with your postcode. Fixed price back, usually within the hour, and it does not change on the day."
+    body="Send a photo from the doorway with your postcode, or just ring us. We will talk it through and agree a figure with you — and once agreed, it does not change on the day."
   />
 </Base>

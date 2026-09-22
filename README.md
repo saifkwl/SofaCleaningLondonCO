@@ -15,9 +15,14 @@ npm run check    # Astro + TypeScript diagnostics
 The site ships **noindex + `Disallow: /`** until you opt in. Nothing gets crawled until then, which
 is deliberate — the two items below must be confirmed first.
 
-1. **Confirm every price.** All prices are placeholders written to be plausible for London, not
-   figures you gave us. They live in one file, `src/data/services.ts`, in each service's
-   `priceRows`. Read them, change them, and only then go live.
+1. **Confirm every price range.** All ranges are placeholders written to be plausible for London,
+   not figures you gave us. They live in one file, `src/data/services.ts`, in each service's
+   `priceRows` as `range: '£65–£85'`. Read them, change them, and only then go live.
+
+   The site deliberately quotes **ranges, not fixed prices**, and every page says the exact figure
+   is agreed by phone or WhatsApp. So a range only needs to be roughly right — it sets expectations
+   rather than committing you. Structured data publishes each range as a `PriceSpecification` with
+   a min and max, which is what Google expects for a guide price.
 2. **Confirm the contact details.** `src/data/site.ts` holds the phone number, WhatsApp number,
    email and opening hours. The phone and WhatsApp number (+44 7342 840056) came from you. The
    email address `hello@sofacleaninglondon.co` is a placeholder — set it to a mailbox that exists.

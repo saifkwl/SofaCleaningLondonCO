@@ -151,7 +151,7 @@ export const areas: Area[] = [
     faqs: [
       {
         q: 'How much is it to clean a large corner sofa in Wandsworth?',
-        a: 'Corner sofas are priced by seat count, from £120 for a four-seat L-shape and around £160 for a six-seat. Count the seat cushions, counting the corner as one and a chaise end as two, or just send a photo from the doorway on WhatsApp and we will count it and quote a fixed price.',
+        a: 'Corner sofas are priced by seat count — typically £120–£155 for a four-seat L-shape and £160–£210 for a six-seat, depending on fabric and condition. Count the seat cushions, counting the corner as one and a chaise end as two, or send a photo from the doorway on WhatsApp and we will count it and agree the exact price with you.',
       },
       {
         q: 'Can you clean an apartment in a riverside block with concierge access?',
@@ -535,7 +535,7 @@ export const areas: Area[] = [
       },
       {
         q: 'Do you cover Kew and Petersham?',
-        a: 'Yes — Kew, Petersham, North Sheen and the Twickenham side are all within our normal Richmond coverage at standard pricing. Send a photo on WhatsApp with your postcode and we will confirm a fixed price.',
+        a: 'Yes — Kew, Petersham, North Sheen and the Twickenham side are all within our normal Richmond coverage at standard pricing. Send a photo on WhatsApp with your postcode and we will come back with a price and confirm it with you.',
       },
     ],
   },
@@ -574,11 +574,11 @@ export const areas: Area[] = [
     faqs: [
       {
         q: 'How much is a whole-house carpet clean in Croydon?',
-        a: 'A three-bed house with carpets throughout plus hall, stairs and landing starts around £180 and is typically a four-hour visit. Croydon houses are larger and parking is easy, so packages here go further than in the inner postcodes. Send your room count on WhatsApp for a fixed price.',
+        a: 'A three-bed house with carpets throughout plus hall, stairs and landing is typically £180–£240 and a four-hour visit, depending on room sizes and how soiled the carpet is. Croydon houses are larger and parking is easy, so packages here go further than in the inner postcodes. Send your room count on WhatsApp and we will agree a figure with you.',
       },
       {
         q: 'Do you clean office chairs in Croydon?',
-        a: 'Yes — office work around the town centre and Purley Way is a regular part of what we do. Task chairs are from £8 each at volume rates from ten chairs, we work evenings and weekends with no out-of-hours surcharge for scheduled jobs, and air movers mean the floor is usable at opening.',
+        a: 'Yes — office work around the town centre and Purley Way is a regular part of what we do. Task chairs are typically £8–£12 each at volume rates from ten chairs, we work evenings and weekends with no out-of-hours surcharge for scheduled jobs, and air movers mean the floor is usable at opening.',
       },
       {
         q: 'Is there a travel charge for CR0?',

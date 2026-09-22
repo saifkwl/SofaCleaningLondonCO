@@ -37,7 +37,7 @@ const pairs = topServices
 const url = `${site.domain}/areas/${area.slug}/`;
 const priceRows = topServices.map((s) => ({
   item: s.nav,
-  from: s.priceRows[0].from,
+  range: s.priceRows[0].range,
   note: s.priceRows[0].item,
 }));
 
@@ -107,7 +107,7 @@ const schema = [
                 >
                   <h3 class="font-display text-lg font-semibold text-ink-950">{s.nav}</h3>
                   <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-800">{s.summary}</p>
-                  <span class="mt-4 text-sm font-bold text-ink-700">From {s.priceRows[0].from}</span>
+                  <span class="mt-4 text-sm font-bold text-ink-700">{s.priceRows[0].range}</span>
                 </a>
               </li>
             ))
@@ -161,7 +161,7 @@ const schema = [
         <div class="mt-6">
           <PriceTable
             rows={priceRows}
-            note={`Starting prices for the services booked most often in ${area.name}. See the full price list for everything else.`}
+            note={`Typical ranges for the services booked most often in ${area.name}. We agree your exact price by phone or WhatsApp before booking. See the full price list for everything else.`}
           />
         </div>
       </section>
@@ -208,7 +208,7 @@ const schema = [
                 class="flex items-center justify-between gap-3 rounded-2xl bg-sand-100 px-4 py-3 text-sm font-semibold text-ink-950 hover:bg-sand-200"
               >
                 {s.nav}
-                <span class="font-normal text-ink-600">{s.priceRows[0].from}</span>
+                <span class="font-normal text-ink-600">{s.priceRows[0].range}</span>
               </a>
             </li>
           ))
@@ -222,7 +222,7 @@ const schema = [
           Book in {area.name}
         </h2>
         <p class="mt-2 text-sm leading-relaxed text-ink-800">
-          Fixed price back, usually within the hour. {site.hours}.
+          Price back usually within the hour, then we confirm it with you. {site.hours}.
         </p>
         <div class="mt-5">
           <QuoteForm id={`aside-${area.slug}`} area={area.postcodes[0]} compact />
