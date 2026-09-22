@@ -37,4 +37,4 @@ export const defaultWhatsappMessage =
  * useful for a client demo or a locale that opts out. The Base layout only
  * loads gtag.js when this is a real ID, and never on a staging build.
  */
-export const analyticsId = 'G-8H390QTE7K';
+export const analyticsId = 'G-F11VQS2NVT';
