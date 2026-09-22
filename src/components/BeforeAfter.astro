@@ -174,9 +174,9 @@ const dims = (img: ImageMetadata) => ({
 
 <script is:inline>
   (() => {
-    if (window.__baInit) return;
-    window.__baInit = true;
-
+    // This script is emitted once per slider on the page. Each copy runs as the
+    // parser reaches it, so it can only see the sliders parsed so far — binding
+    // must therefore be idempotent per element rather than guarded globally.
     const bind = () => {
       document.querySelectorAll('.ba').forEach((frame) => {
         if (frame.dataset.bound) return;
@@ -229,6 +229,10 @@ const dims = (img: ImageMetadata) => ({
     };
 
     bind();
-    document.addEventListener('astro:page-load', bind);
+    if (!window.__baInit) {
+      window.__baInit = true;
+      document.addEventListener('DOMContentLoaded', bind);
+      document.addEventListener('astro:page-load', bind);
+    }
   })();
 </script>

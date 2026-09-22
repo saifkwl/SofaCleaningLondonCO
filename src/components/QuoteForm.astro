@@ -166,9 +166,7 @@ const { preselect, area = '', compact = false, id = 'quote' } = Astro.props;
 
 <script is:inline>
   (() => {
-    if (window.__quoteInit) return;
-    window.__quoteInit = true;
-
+    // Emitted once per form; bind per element rather than guarding globally.
     const build = (form) => {
       const get = (n) => (form.elements[n]?.value || '').trim();
       const lines = [
@@ -242,6 +240,10 @@ const { preselect, area = '', compact = false, id = 'quote' } = Astro.props;
     };
 
     bind();
-    document.addEventListener('astro:page-load', bind);
+    if (!window.__quoteInit) {
+      window.__quoteInit = true;
+      document.addEventListener('DOMContentLoaded', bind);
+      document.addEventListener('astro:page-load', bind);
+    }
   })();
 </script>
