@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://sofacleaninglondon.co',
   trailingSlash: 'always',
+  // Inlining the ~44kB stylesheet was measurably worse: it pushed the homepage
+  // HTML to 144kB and cost 3 Lighthouse points on a simulated slow connection.
+  // A separate, cacheable stylesheet wins.
   build: { format: 'directory', inlineStylesheets: 'auto' },
   integrations: [
     sitemap({

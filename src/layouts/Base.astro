@@ -2,6 +2,11 @@
 import '@fontsource-variable/fraunces';
 import '@fontsource-variable/inter';
 import '../styles/global.css';
+
+// The browser only discovers these once the stylesheet has parsed, which holds
+// up the first text paint. Both are used above the fold on every page.
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyContactBar from '../components/StickyContactBar.astro';
@@ -82,6 +87,9 @@ const website = {
     <meta property="og:image" content={ogUrl} />
     <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" as="font" type="font/woff2" href={frauncesLatin} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={interLatin} crossorigin />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
