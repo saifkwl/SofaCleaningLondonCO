@@ -1,12 +1,8 @@
 import type { APIRoute } from 'astro';
 import { site } from '../data/site';
 
-/**
- * While PUBLIC_ALLOW_INDEXING is unset the whole site is disallowed, matching
- * the noindex tag in the layout. Set PUBLIC_ALLOW_INDEXING=true at build time
- * once the owner has confirmed prices and contact details.
- */
-const allowIndexing = import.meta.env.PUBLIC_ALLOW_INDEXING === 'true';
+/** Mirrors the robots meta tag in Base.astro — see the note there. */
+const allowIndexing = import.meta.env.PUBLIC_DISABLE_INDEXING !== 'true';
 
 const body = allowIndexing
   ? // Privacy and terms carry a noindex tag instead of a Disallow rule: a

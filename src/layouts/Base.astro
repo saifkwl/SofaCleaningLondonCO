@@ -24,11 +24,13 @@ const canonical = new URL(Astro.url.pathname, site.domain).href;
 const ogUrl = new URL(ogImage ?? '/og-default.jpg', site.domain).href;
 
 /**
- * Staging guard. Until the owner has confirmed pricing and contact details,
- * PUBLIC_ALLOW_INDEXING stays unset and every page ships noindex.
+ * The site is live, so indexing is on by default. Set PUBLIC_DISABLE_INDEXING
+ * to "true" to take the whole site back out of search — useful for a staging
+ * deploy or if something needs pulling in a hurry.
  */
-const indexingAllowed = import.meta.env.PUBLIC_ALLOW_INDEXING === 'true';
-const robots = !indexingAllowed || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
+const indexingDisabled = import.meta.env.PUBLIC_DISABLE_INDEXING === 'true';
+const robots =
+  indexingDisabled || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 
 const business = {
   '@type': 'HomeAndConstructionBusiness',
