@@ -49,45 +49,39 @@ const show = enabled && Boolean(analyticsId);
 
 {
   show && (
-    <script define:vars={{ analyticsId }} is:inline>
+    <script is:inline>
       (() => {
         const KEY = 'cookie-consent';
         const banner = document.getElementById('consent-banner');
         if (!banner) return;
 
-        const loadGA = () => {
-          if (window.__gaLoaded) return;
-          window.__gaLoaded = true;
-          const s = document.createElement('script');
-          s.async = true;
-          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + analyticsId;
-          document.head.appendChild(s);
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function () {
-            window.dataLayer.push(arguments);
-          };
-          window.gtag('js', new Date());
-          window.gtag('config', analyticsId);
+        // The tag is already on the page with analytics_storage denied by the
+        // head snippet. Answering only flips that flag — nothing is loaded or
+        // unloaded here.
+        const setConsent = (state) => {
+          try {
+            localStorage.setItem(KEY, state);
+          } catch (e) {
+            /* private mode — the choice just won't persist */
+          }
+          window.gtag?.('consent', 'update', { analytics_storage: state });
+          banner.classList.add('hidden');
         };
 
-        const stored = localStorage.getItem(KEY);
-        if (stored === 'granted') {
-          loadGA();
-        } else if (stored !== 'denied') {
-          // No choice recorded yet — ask, without loading anything in the meantime.
-          banner.classList.remove('hidden');
+        let stored = null;
+        try {
+          stored = localStorage.getItem(KEY);
+        } catch (e) {
+          /* ignore */
         }
+        if (stored !== 'granted' && stored !== 'denied') banner.classList.remove('hidden');
 
-        document.getElementById('consent-accept')?.addEventListener('click', () => {
-          localStorage.setItem(KEY, 'granted');
-          loadGA();
-          banner.classList.add('hidden');
-        });
-
-        document.getElementById('consent-reject')?.addEventListener('click', () => {
-          localStorage.setItem(KEY, 'denied');
-          banner.classList.add('hidden');
-        });
+        document.getElementById('consent-accept')?.addEventListener('click', () =>
+          setConsent('granted')
+        );
+        document.getElementById('consent-reject')?.addEventListener('click', () =>
+          setConsent('denied')
+        );
       })();
     </script>
   )

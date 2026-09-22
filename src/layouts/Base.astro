@@ -12,7 +12,7 @@ import Footer from '../components/Footer.astro';
 import StickyContactBar from '../components/StickyContactBar.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
 import Schema from '../components/Schema.astro';
-import { site } from '../data/site';
+import { site, analyticsId } from '../data/site';
 
 interface Props {
   title: string;
@@ -100,6 +100,49 @@ const website = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <Schema schema={[business, website, ...schema]} />
+
+    {
+      analyticsEnabled && (
+        <>
+          {/*
+            Google Consent Mode v2. The tag ships on every page so Google's own
+            installation check can see it, but analytics_storage starts denied,
+            so gtag writes no cookies and stores no identifier until the visitor
+            accepts. ConsentBanner flips the flag with a consent update; it
+            never injects or removes the tag.
+
+            Read the stored choice before gtag.js runs, otherwise a returning
+            visitor who already accepted would be treated as denied for the
+            first few hundred milliseconds of every page.
+          */}
+          <script is:inline define:vars={{ analyticsId }}>
+            window.dataLayer = window.dataLayer || [];
+            // define:vars wraps this script in an IIFE, so a bare function
+            // declaration would stay local. The banner needs it on window.
+            function gtag() {
+              window.dataLayer.push(arguments);
+            }
+            window.gtag = gtag;
+            var granted = false;
+            try {
+              granted = localStorage.getItem('cookie-consent') === 'granted';
+            } catch (e) {
+              /* private mode — treat as not yet consented */
+            }
+            gtag('consent', 'default', {
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              analytics_storage: granted ? 'granted' : 'denied',
+              wait_for_update: 500,
+            });
+            gtag('js', new Date());
+            gtag('config', analyticsId);
+          </script>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
+        </>
+      )
+    }
   </head>
   <body class="min-h-screen antialiased">
     <a
