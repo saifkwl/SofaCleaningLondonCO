@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects.
+# @astrojs/sitemap names its index sitemap-index.xml, but /sitemap.xml is what
+# people and crawlers try first. Search Console follows the redirect.
+/sitemap.xml  /sitemap-index.xml  301
+/sitemap_index.xml  /sitemap-index.xml  301
