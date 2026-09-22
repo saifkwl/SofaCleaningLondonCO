@@ -3,8 +3,10 @@ interface Props {
   rows: { item: string; range: string; note: string }[];
   note?: string;
   title?: string;
+  /** Set false where the surrounding copy already carries the estimate wording */
+  disclaimer?: boolean;
 }
-const { rows, note, title } = Astro.props;
+const { rows, note, title, disclaimer = true } = Astro.props;
 ---
 
 <div class="overflow-hidden rounded-card border border-ink-950/10 bg-sand-50">
@@ -43,6 +45,16 @@ const { rows, note, title } = Astro.props;
     note && (
       <p class="border-t border-ink-950/10 bg-sand-100 px-6 py-4 text-sm leading-relaxed text-ink-800">
         {note}
+      </p>
+    )
+  }
+  {
+    disclaimer && (
+      <p class="border-t border-ink-950/10 bg-sand-100 px-6 pb-4 text-[0.82rem] leading-relaxed text-ink-700">
+        <strong class="font-semibold text-ink-900">Estimates, not final quotes.</strong> These are
+        guide ranges based on typical London rates. A smaller or lightly soiled job can come in
+        under the range, and a big or badly soiled one can sit above it. We agree your actual price
+        with you on the phone or on WhatsApp before anything is booked.
       </p>
     )
   }

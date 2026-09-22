@@ -29,7 +29,7 @@ export const services: Service[] = [
     slug: 'fabric-sofa-cleaning',
     nav: 'Fabric sofa cleaning',
     h1: 'Fabric Sofa Cleaning in London',
-    metaTitle: 'Fabric Sofa Cleaning London | Typically £65–£105',
+    metaTitle: 'Fabric Sofa Cleaning London | Guide £55–£110',
     metaDescription:
       'Deep clean for fabric sofas across London. Fibre test, HEPA vacuum, pre-spray and hot water extraction. Dry in 3–5 hours. WhatsApp a photo for a price.',
     summary: 'Hot water extraction for cotton, linen, chenille and microfibre settees.',
@@ -65,10 +65,10 @@ export const services: Service[] = [
     },
     priceNote: 'Typical ranges for a normally soiled item. Your exact price depends on size, fabric and condition — we confirm it with you on the phone or WhatsApp before booking.',
     priceRows: [
-      { item: '2-seater fabric sofa', range: '£65–£85', note: 'Roughly 45–60 minutes' },
-      { item: '3-seater fabric sofa', range: '£80–£105', note: 'Roughly 60–75 minutes' },
-      { item: 'Sofa bed (mechanism out)', range: '£95–£125', note: 'Includes the mattress face' },
-      { item: 'Each extra loose cushion', range: '£6–£10', note: 'Scatter cushions, both faces' },
+      { item: '2-seater fabric sofa', range: '£55–£85', note: 'Roughly 45–60 minutes' },
+      { item: '3-seater fabric sofa', range: '£70–£110', note: 'Roughly 60–75 minutes' },
+      { item: 'Sofa bed (mechanism out)', range: '£85–£130', note: 'Includes the mattress face' },
+      { item: 'Each extra loose cushion', range: '£5–£10', note: 'Scatter cushions, both faces' },
     ],
     faqs: [
       {
@@ -130,15 +130,15 @@ export const services: Service[] = [
     },
     priceNote: 'Corner sofas are priced by seat count. Send a photo and we will count it and talk you through the price.',
     priceRows: [
-      { item: '4-seat corner sofa', range: '£120–£155', note: 'Typical small L-shape' },
-      { item: '5-seat corner sofa', range: '£140–£180', note: 'Run, corner and return' },
-      { item: '6-seat corner sofa', range: '£160–£210', note: 'Roughly 2 hours' },
-      { item: 'Recliner action, each', range: '£10–£15', note: 'Footrest and hidden faces' },
+      { item: '4-seat corner sofa', range: '£110–£160', note: 'Typical small L-shape' },
+      { item: '5-seat corner sofa', range: '£130–£185', note: 'Run, corner and return' },
+      { item: '6-seat corner sofa', range: '£150–£215', note: 'Roughly 2 hours' },
+      { item: 'Recliner action, each', range: '£8–£15', note: 'Footrest and hidden faces' },
     ],
     faqs: [
       {
         q: 'How is a corner sofa priced?',
-        a: 'By seat count. Count the seat cushions you sit on, counting the corner wedge as one and a chaise end as two. A six-seat corner is typically £160–£210 depending on fabric and condition. Send a photo on WhatsApp and we will count it and agree the exact price with you before we book you in.',
+        a: 'By seat count. Count the seat cushions you sit on, counting the corner wedge as one and a chaise end as two. As a guide a six-seat corner is £150–£215 depending on fabric and condition — an estimate rather than a quote, and a lighter job can come in under it. Send a photo on WhatsApp and we will count it and agree your actual price before we book you in.',
       },
       {
         q: 'Do you clean the part against the wall?',
@@ -196,10 +196,10 @@ export const services: Service[] = [
     },
     priceNote: 'Leather work includes conditioning as standard, not as an upsell. Where a hide falls in the range depends on its size and condition.',
     priceRows: [
-      { item: '2-seater leather sofa', range: '£80–£105', note: 'Clean and condition' },
-      { item: '3-seater leather sofa', range: '£95–£125', note: 'Clean and condition' },
-      { item: 'Leather armchair or recliner', range: '£45–£60', note: 'Per chair' },
-      { item: 'Protective top-coat', range: '£25–£40', note: 'High-wear panels' },
+      { item: '2-seater leather sofa', range: '£70–£100', note: 'Clean and condition' },
+      { item: '3-seater leather sofa', range: '£85–£120', note: 'Clean and condition' },
+      { item: 'Leather armchair or recliner', range: '£40–£60', note: 'Per chair' },
+      { item: 'Protective top-coat', range: '£25–£45', note: 'High-wear panels' },
     ],
     faqs: [
       {
@@ -261,10 +261,10 @@ export const services: Service[] = [
     },
     priceNote: 'Velvet is priced the same as fabric — the method differs, the cost does not. Final price confirmed when we speak.',
     priceRows: [
-      { item: '2-seater velvet sofa', range: '£70–£90', note: 'Low-moisture method' },
-      { item: '3-seater velvet sofa', range: '£85–£110', note: 'Low-moisture method' },
-      { item: 'Velvet accent or dining chair', range: '£20–£30', note: 'Per chair' },
-      { item: 'Velvet headboard', range: '£45–£65', note: 'Buttoned or panelled' },
+      { item: '2-seater velvet sofa', range: '£65–£95', note: 'Low-moisture method' },
+      { item: '3-seater velvet sofa', range: '£80–£115', note: 'Low-moisture method' },
+      { item: 'Velvet accent or dining chair', range: '£18–£30', note: 'Per chair' },
+      { item: 'Velvet headboard', range: '£40–£65', note: 'Buttoned or panelled' },
     ],
     faqs: [
       {
@@ -291,9 +291,9 @@ export const services: Service[] = [
     slug: 'armchair-and-dining-chair-cleaning',
     nav: 'Armchairs & dining chairs',
     h1: 'Armchair & Dining Chair Cleaning in London',
-    metaTitle: 'Dining Chair & Armchair Cleaning London | From £18',
+    metaTitle: 'Dining Chair & Armchair Cleaning London | From £15',
     metaDescription:
-      'Upholstered dining chair and armchair cleaning across London. Water rings, food marks and arm-top soiling removed. Typically £18–£32 a chair, six chairs in under two hours.',
+      'Upholstered dining chair and armchair cleaning across London. Water rings, food marks and arm-top soiling removed. Guide price £15–£35 a chair, six chairs in under two hours.',
     summary: 'Dining sets, nursing chairs, wingbacks, bar stools and office chairs.',
     intro: [
       'Upholstered dining chairs take more abuse per square inch than any sofa in the house. They sit under plates, they catch every splash, and pale linen-look seat pads show a water ring from a single wet glass base. Six chairs around a table will usually have six different histories written on them.',
@@ -326,10 +326,10 @@ export const services: Service[] = [
     },
     priceNote: 'Minimum call-out applies — most people pair chairs with a sofa or carpet clean, which brings the per-chair price down.',
     priceRows: [
-      { item: 'Dining chair, seat pad only', range: '£18–£25', note: 'Per chair' },
-      { item: 'Fully upholstered dining chair', range: '£22–£32', note: 'Back and seat' },
-      { item: 'Armchair or nursing chair', range: '£40–£55', note: 'Per chair' },
-      { item: 'Wingback or recliner armchair', range: '£50–£70', note: 'Per chair' },
+      { item: 'Dining chair, seat pad only', range: '£15–£25', note: 'Per chair' },
+      { item: 'Fully upholstered dining chair', range: '£20–£35', note: 'Back and seat' },
+      { item: 'Armchair or nursing chair', range: '£35–£55', note: 'Per chair' },
+      { item: 'Wingback or recliner armchair', range: '£45–£70', note: 'Per chair' },
     ],
     faqs: [
       {
@@ -356,9 +356,9 @@ export const services: Service[] = [
     slug: 'carpet-cleaning',
     nav: 'Carpet cleaning',
     h1: 'Carpet Cleaning in London',
-    metaTitle: 'Carpet Cleaning London | Typically £45–£90 a Room',
+    metaTitle: 'Carpet Cleaning London | Guide £45–£95 a Room',
     metaDescription:
-      'Professional carpet cleaning across London. Hot water extraction, traffic-lane treatment and rapid drying. Typically £45–£90 a room. Photo quotes on WhatsApp.',
+      'Professional carpet cleaning across London. Hot water extraction, traffic-lane treatment and rapid drying. Guide price £45–£95 a room. Photo estimates on WhatsApp.',
     summary: 'Room-by-room hot water extraction with traffic-lane and stain work.',
     intro: [
       'Carpet soil is mostly not a stain. It is dry grit — city dust, garden soil, skin and fibre — sitting down at the base of the pile where it abrades the fibre every time someone walks on it. That is why a carpet does not simply look dirty as it ages; it looks worn, dull and flat, because it genuinely is being sanded from underneath.',
@@ -392,10 +392,10 @@ export const services: Service[] = [
     },
     priceNote: 'Rooms are priced by size, so where you fall in the range depends on your room. Hallways and landings are usually charged as a half room.',
     priceRows: [
-      { item: 'Single bedroom', range: '£45–£60', note: 'Up to about 10m²' },
-      { item: 'Double bedroom', range: '£55–£75', note: 'Up to about 16m²' },
-      { item: 'Lounge or living room', range: '£65–£85', note: 'Up to about 22m²' },
-      { item: 'Hall, stairs and landing', range: '£70–£95', note: 'Priced as one unit' },
+      { item: 'Single bedroom', range: '£45–£65', note: 'Up to about 10m²' },
+      { item: 'Double bedroom', range: '£55–£80', note: 'Up to about 16m²' },
+      { item: 'Lounge or living room', range: '£65–£95', note: 'Up to about 22m²' },
+      { item: 'Hall, stairs and landing', range: '£70–£100', note: 'Priced as one unit' },
     ],
     faqs: [
       {
@@ -424,7 +424,7 @@ export const services: Service[] = [
     h1: 'Stair Carpet Cleaning in London',
     metaTitle: 'Stair Carpet Cleaning London | Hall, Stairs & Landing',
     metaDescription:
-      'Stair carpet cleaning across London. Every tread, riser, nosing and spindle edge. Heavy traffic soiling lifted, dry in 2–4 hours. Typically £70–£95.',
+      'Stair carpet cleaning across London. Every tread, riser, nosing and spindle edge. Heavy traffic soiling lifted, dry in 2–4 hours. Guide price £70–£100.',
     summary: 'Treads, risers, nosings and spindle edges — the dirtiest carpet in any house.',
     intro: [
       'Stairs are the hardest-working carpet in a house by a wide margin. Every journey through the property crosses them, the whole load lands on the nosing — the front edge of each tread — and there is nowhere for the soil to spread out. That is why a staircase can look filthy while the landing at the top of it still looks fine.',
@@ -457,9 +457,9 @@ export const services: Service[] = [
     },
     priceNote: 'Hall, stairs and landing are normally quoted as one package — better value than booking separately. Winders and extra flights move you up the range.',
     priceRows: [
-      { item: 'Hall, stairs and landing', range: '£70–£95', note: 'Standard straight flight' },
-      { item: 'Stairs only', range: '£45–£65', note: 'Up to 14 treads' },
-      { item: 'Additional flight', range: '£35–£50', note: 'Second or loft flight' },
+      { item: 'Hall, stairs and landing', range: '£70–£100', note: 'Standard straight flight' },
+      { item: 'Stairs only', range: '£45–£75', note: 'Up to 14 treads' },
+      { item: 'Additional flight', range: '£30–£55', note: 'Second or loft flight' },
       { item: 'Winders / turn treads', range: '£2–£4', note: 'Each, added to the above' },
     ],
     faqs: [
@@ -523,9 +523,9 @@ export const services: Service[] = [
     },
     priceNote: 'Stain and odour work is usually added to a clean. Severe pet contamination is quoted after we have seen it, because the source has to be found first.',
     priceRows: [
-      { item: 'Single stain treatment', range: '£15–£25', note: 'Added to a clean' },
-      { item: 'Pet odour treatment, per area', range: '£35–£60', note: 'Enzyme, with dwell time' },
-      { item: 'Sub-surface / underlay flush', range: '£60–£120', note: 'Quoted after inspection' },
+      { item: 'Single stain treatment', range: '£15–£30', note: 'Added to a clean' },
+      { item: 'Pet odour treatment, per area', range: '£35–£65', note: 'Enzyme, with dwell time' },
+      { item: 'Sub-surface / underlay flush', range: '£60–£130', note: 'Quoted after inspection' },
       { item: 'UV inspection', range: 'Free', note: 'With any booked clean' },
     ],
     faqs: [
@@ -588,10 +588,10 @@ export const services: Service[] = [
     },
     priceNote: 'Whole-property packages are cheaper than room-by-room. Tell us the property size and we will talk you through the price.',
     priceRows: [
-      { item: '1-bed flat, carpets throughout', range: '£95–£125', note: 'Typically 2 hours' },
-      { item: '2-bed flat, carpets throughout', range: '£130–£175', note: 'Typically 3 hours' },
-      { item: '3-bed house, carpets and stairs', range: '£180–£240', note: 'Typically 4 hours' },
-      { item: 'Add sofa or mattress', range: '£45–£70', note: 'Per item, with the above' },
+      { item: '1-bed flat, carpets throughout', range: '£95–£140', note: 'Typically 2 hours' },
+      { item: '2-bed flat, carpets throughout', range: '£130–£185', note: 'Typically 3 hours' },
+      { item: '3-bed house, carpets and stairs', range: '£180–£250', note: 'Typically 4 hours' },
+      { item: 'Add sofa or mattress', range: '£45–£75', note: 'Per item, with the above' },
     ],
     faqs: [
       {
@@ -653,10 +653,10 @@ export const services: Service[] = [
     },
     priceNote: 'Volume rates apply from ten items and scheduled contracts are priced lower than one-off visits. Larger sites get a written scope and price after a walk-round.',
     priceRows: [
-      { item: 'Office task chair', range: '£8–£12', note: 'Rate from 10 chairs' },
-      { item: 'Restaurant or bar chair', range: '£10–£15', note: 'Rate from 10 chairs' },
-      { item: 'Banquette seating', range: '£25–£40', note: 'Per linear metre' },
-      { item: 'Commercial carpet', range: '£2.50–£4', note: 'Per m², from 50m²' },
+      { item: 'Office task chair', range: '£8–£14', note: 'Rate from 10 chairs' },
+      { item: 'Restaurant or bar chair', range: '£10–£16', note: 'Rate from 10 chairs' },
+      { item: 'Banquette seating', range: '£25–£45', note: 'Per linear metre' },
+      { item: 'Commercial carpet', range: '£2.50–£4.50', note: 'Per m², from 50m²' },
     ],
     faqs: [
       {

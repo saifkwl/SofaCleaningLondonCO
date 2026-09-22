@@ -151,7 +151,7 @@ export const areas: Area[] = [
     faqs: [
       {
         q: 'How much is it to clean a large corner sofa in Wandsworth?',
-        a: 'Corner sofas are priced by seat count — typically £120–£155 for a four-seat L-shape and £160–£210 for a six-seat, depending on fabric and condition. Count the seat cushions, counting the corner as one and a chaise end as two, or send a photo from the doorway on WhatsApp and we will count it and agree the exact price with you.',
+        a: 'Corner sofas are priced by seat count — as a guide, £110–£160 for a four-seat L-shape and £150–£215 for a six-seat, depending on fabric and condition. That is an estimate rather than a quote, and a lighter job can come in under it. Count the seat cushions, counting the corner as one and a chaise end as two, or send a photo from the doorway on WhatsApp and we will count it and agree your actual price.',
       },
       {
         q: 'Can you clean an apartment in a riverside block with concierge access?',
@@ -574,11 +574,11 @@ export const areas: Area[] = [
     faqs: [
       {
         q: 'How much is a whole-house carpet clean in Croydon?',
-        a: 'A three-bed house with carpets throughout plus hall, stairs and landing is typically £180–£240 and a four-hour visit, depending on room sizes and how soiled the carpet is. Croydon houses are larger and parking is easy, so packages here go further than in the inner postcodes. Send your room count on WhatsApp and we will agree a figure with you.',
+        a: 'As a guide, a three-bed house with carpets throughout plus hall, stairs and landing is £180–£250 and a four-hour visit, depending on room sizes and how soiled the carpet is. It is an estimate rather than a quote — fewer rooms or lighter soiling brings it down. Croydon houses are larger and parking is easy, so packages here go further than in the inner postcodes. Send your room count on WhatsApp and we will agree your actual figure.',
       },
       {
         q: 'Do you clean office chairs in Croydon?',
-        a: 'Yes — office work around the town centre and Purley Way is a regular part of what we do. Task chairs are typically £8–£12 each at volume rates from ten chairs, we work evenings and weekends with no out-of-hours surcharge for scheduled jobs, and air movers mean the floor is usable at opening.',
+        a: 'Yes — office work around the town centre and Purley Way is a regular part of what we do. Task chairs are typically £8–£14 each at volume rates from ten chairs, we work evenings and weekends with no out-of-hours surcharge for scheduled jobs, and air movers mean the floor is usable at opening.',
       },
       {
         q: 'Is there a travel charge for CR0?',
