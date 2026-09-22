@@ -5,3 +5,6 @@ dist/
 .env.production
 .DS_Store
 npm-debug.log*
+
+# Zipped dist/ for Cloudflare Pages direct upload — regenerate, never commit
+*.zip
