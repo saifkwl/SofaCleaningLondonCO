@@ -7,7 +7,15 @@ interface Props {
   caption: string;
   beforeAlt: string;
   afterAlt: string;
-  /** The first slider on a page should load eagerly for LCP */
+  /**
+   * The first slider on a page loads eagerly rather than lazily. It does not
+   * get fetchpriority="high": on the 412x823 viewport PageSpeed emulates, the
+   * homepage slider starts at y=856 — below the fold — so forcing both of its
+   * images to the front of the queue only delayed the fonts and stylesheet
+   * that the first paint actually needs. Left alone, the browser prioritises
+   * it by its own viewport check, which is high on desktop (where the slider
+   * sits beside the h1) and low on mobile (where it does not).
+   */
   eager?: boolean;
   /** Caption colour, for sliders placed on the dark teal background */
   tone?: 'dark' | 'light';
@@ -74,8 +82,7 @@ const dims = (img: ImageMetadata) => ({
       {...imgProps}
       {...dims(after)}
       loading={eager ? 'eager' : 'lazy'}
-      fetchpriority={eager ? 'high' : undefined}
-      decoding={eager ? 'sync' : 'async'}
+      decoding="async"
       draggable={false}
       class="pointer-events-none absolute inset-0 h-full w-full object-cover"
     />
@@ -86,7 +93,7 @@ const dims = (img: ImageMetadata) => ({
         {...imgProps}
         {...dims(before)}
         loading={eager ? 'eager' : 'lazy'}
-        decoding={eager ? 'sync' : 'async'}
+        decoding="async"
         draggable={false}
         class="pointer-events-none absolute inset-0 h-full w-full object-cover"
       />
@@ -172,23 +179,28 @@ const dims = (img: ImageMetadata) => ({
   }
 </style>
 
-<script is:inline>
+<!--
+  Not `is:inline`: an inline script is emitted once per slider, so the homepage
+  shipped five identical copies — ~15kB of duplicated source to parse and run.
+  Astro bundles this one into a single deferred module instead. Binding still
+  has to be idempotent per element because astro:page-load re-runs it.
+-->
+<script>
   (() => {
-    // This script is emitted once per slider on the page. Each copy runs as the
-    // parser reaches it, so it can only see the sliders parsed so far — binding
-    // must therefore be idempotent per element rather than guarded globally.
     const bind = () => {
-      document.querySelectorAll('.ba').forEach((frame) => {
+      document.querySelectorAll<HTMLElement>('.ba').forEach((frame) => {
         if (frame.dataset.bound) return;
         frame.dataset.bound = '1';
 
-        const input = frame.querySelector('.ba-range');
-        const apply = (pct) => {
+        const input = frame.querySelector<HTMLInputElement>('.ba-range');
+        if (!input) return;
+
+        const apply = (pct: number) => {
           const v = Math.max(0, Math.min(100, pct));
           frame.style.setProperty('--pos', v + '%');
           input.value = String(Math.round(v));
         };
-        const fromEvent = (e) => {
+        const fromEvent = (e: PointerEvent) => {
           const r = frame.getBoundingClientRect();
           apply(((e.clientX - r.left) / r.width) * 100);
         };
@@ -209,7 +221,7 @@ const dims = (img: ImageMetadata) => ({
           e.preventDefault();
         });
 
-        const end = (e) => {
+        const end = (e: PointerEvent) => {
           if (!dragging) return;
           dragging = false;
           frame.classList.remove('is-dragging');
@@ -229,10 +241,7 @@ const dims = (img: ImageMetadata) => ({
     };
 
     bind();
-    if (!window.__baInit) {
-      window.__baInit = true;
-      document.addEventListener('DOMContentLoaded', bind);
-      document.addEventListener('astro:page-load', bind);
-    }
+    // Re-bind after a view transition swaps in a page with new sliders.
+    document.addEventListener('astro:page-load', bind);
   })();
 </script>
