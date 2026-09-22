@@ -12,7 +12,7 @@ import { site } from '../data/site';
   <PageHero
     eyebrow="Legal"
     title="Privacy notice"
-    lede="Plain English version: we use Google Analytics to see how many people visit and which pages they read. The quote form itself collects nothing — it builds a message on your own phone and you decide whether to send it."
+    lede="Plain English version: nothing is tracked unless you say yes to the cookie banner. The quote form itself collects nothing either way — it builds a message on your own phone and you decide whether to send it."
     trail={[{ href: '/privacy/', label: 'Privacy' }]}
   />
 
@@ -20,19 +20,25 @@ import { site } from '../data/site';
     <article class="prose-body max-w-2xl">
       <h2 class="mt-0">What this website collects</h2>
       <p>
-        We use <strong>Google Analytics (GA4)</strong> to understand how many people visit this
-        site, which pages they read, and roughly where visitors are browsing from. Google
-        Analytics sets cookies in your browser to do this, and the resulting data is processed by
-        Google. We do not use it to advertise to you elsewhere, and we do not combine it with the
-        details you send us through the quote form or WhatsApp.
+        By default, nothing. No cookie is set and no analytics script runs until you actively
+        accept the cookie banner shown on your first visit. Declining, or simply not answering,
+        means nothing is tracked — the site works identically either way.
       </p>
       <p>
-        There is no advertising pixel and no other third-party tracking script on these pages.
+        If you accept, we load <strong>Google Analytics (GA4)</strong> to understand how many
+        people visit this site, which pages they read, and roughly where visitors are browsing
+        from. Google Analytics sets cookies in your browser to do this, and the resulting data is
+        processed by Google. We do not use it to advertise to you elsewhere, and we do not combine
+        it with the details you send us through the quote form or WhatsApp.
+      </p>
+      <p>
+        There is no advertising pixel and no other third-party tracking script on these pages,
+        accepted or not.
       </p>
       <p>
         Your web host will also keep standard server logs, which typically include IP addresses
-        and requested URLs, for security and diagnostics. That is normal for any website and is
-        not used by us to identify or profile anyone.
+        and requested URLs, for security and diagnostics. That happens regardless of your cookie
+        choice, is normal for any website, and is not used by us to identify or profile anyone.
       </p>
 
       <h2>What the quote form actually does</h2>
@@ -69,10 +75,15 @@ import { site } from '../data/site';
 
       <h2>Cookies</h2>
       <p>
-        Google Analytics sets a small number of cookies to distinguish one visitor from another
-        and to remember a session for up to 24 hours. None of them identify you personally, and
-        none are used for advertising. You can block them by adjusting your browser's cookie
-        settings, or by using a browser extension such as an ad blocker — the site works
+        If you accept the cookie banner, Google Analytics sets a small number of cookies to
+        distinguish one visitor from another and to remember a session for up to 24 hours. None of
+        them identify you personally, and none are used for advertising.
+      </p>
+      <p>
+        Your choice is remembered in your browser, so you are only asked once. To change your
+        mind later, clear this site's data in your browser settings and the banner will appear
+        again on your next visit. You can also block Google Analytics outright by adjusting your
+        browser's cookie settings or using a tracker-blocking extension — the site works
         identically either way, since nothing here depends on analytics to function.
       </p>
 

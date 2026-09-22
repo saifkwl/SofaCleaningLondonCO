@@ -10,8 +10,9 @@ import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyContactBar from '../components/StickyContactBar.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 import Schema from '../components/Schema.astro';
-import { site, analyticsId } from '../data/site';
+import { site } from '../data/site';
 
 interface Props {
   title: string;
@@ -37,9 +38,9 @@ const indexingDisabled = import.meta.env.PUBLIC_DISABLE_INDEXING === 'true';
 const robots =
   indexingDisabled || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 
-// Skip analytics on a staging build so test traffic never reaches the real
-// GA4 property.
-const analyticsEnabled = Boolean(analyticsId) && !indexingDisabled;
+// Skip analytics entirely on a staging build — there is nothing to ask
+// consent for and no reason to send test traffic to the real GA4 property.
+const analyticsEnabled = !indexingDisabled;
 
 const business = {
   '@type': 'HomeAndConstructionBusiness',
@@ -99,22 +100,6 @@ const website = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <Schema schema={[business, website, ...schema]} />
-
-    {
-      analyticsEnabled && (
-        <>
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
-          <script define:vars={{ analyticsId }}>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', analyticsId);
-          </script>
-        </>
-      )
-    }
   </head>
   <body class="min-h-screen antialiased">
     <a
@@ -123,6 +108,13 @@ const website = {
     >
       Skip to content
     </a>
+    <!--
+      Placed right after the skip link, ahead of the whole page including the
+      long footer link lists, so a keyboard user reaches Accept/Reject in a
+      couple of tabs rather than a hundred. Visual position is unaffected —
+      it's fixed to the bottom regardless of where it sits in the DOM.
+    -->
+    <ConsentBanner enabled={analyticsEnabled} />
     <Header />
     <main id="main" class="pb-24 md:pb-0">
       <slot />

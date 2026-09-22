@@ -1,0 +1,94 @@
+---
+import { analyticsId } from '../data/site';
+
+interface Props {
+  /** False on a staging build — the banner has nothing to ask consent for. */
+  enabled?: boolean;
+}
+const { enabled = true } = Astro.props;
+const show = enabled && Boolean(analyticsId);
+---
+
+{
+  show && (
+    <div
+      id="consent-banner"
+      class="fixed inset-x-0 bottom-[5.75rem] z-[60] hidden px-4 md:bottom-4"
+      role="dialog"
+      aria-live="polite"
+      aria-label="Cookie choice"
+    >
+      <div
+        class="mx-auto flex max-w-xl flex-col gap-3 rounded-3xl border border-ink-950/10 bg-sand-50 p-5 shadow-pop sm:flex-row sm:items-center"
+      >
+        <p class="flex-1 text-sm leading-relaxed text-ink-900">
+          We'd like to use Google Analytics to see which pages are useful, so we know what to
+          improve. No cookies are set unless you say yes, and it makes no difference to using the
+          site either way. See our <a class="underline underline-offset-2" href="/privacy/">privacy notice</a>.
+        </p>
+        <div class="flex shrink-0 gap-2">
+          <button
+            type="button"
+            id="consent-reject"
+            class="rounded-full border-2 border-ink-950/15 px-4 py-2.5 text-sm font-bold text-ink-950 hover:border-ink-950/40"
+          >
+            No thanks
+          </button>
+          <button
+            type="button"
+            id="consent-accept"
+            class="rounded-full bg-zest-400 px-4 py-2.5 text-sm font-bold text-ink-950 hover:bg-zest-500"
+          >
+            Yes, that's fine
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  show && (
+    <script define:vars={{ analyticsId }} is:inline>
+      (() => {
+        const KEY = 'cookie-consent';
+        const banner = document.getElementById('consent-banner');
+        if (!banner) return;
+
+        const loadGA = () => {
+          if (window.__gaLoaded) return;
+          window.__gaLoaded = true;
+          const s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + analyticsId;
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () {
+            window.dataLayer.push(arguments);
+          };
+          window.gtag('js', new Date());
+          window.gtag('config', analyticsId);
+        };
+
+        const stored = localStorage.getItem(KEY);
+        if (stored === 'granted') {
+          loadGA();
+        } else if (stored !== 'denied') {
+          // No choice recorded yet — ask, without loading anything in the meantime.
+          banner.classList.remove('hidden');
+        }
+
+        document.getElementById('consent-accept')?.addEventListener('click', () => {
+          localStorage.setItem(KEY, 'granted');
+          loadGA();
+          banner.classList.add('hidden');
+        });
+
+        document.getElementById('consent-reject')?.addEventListener('click', () => {
+          localStorage.setItem(KEY, 'denied');
+          banner.classList.add('hidden');
+        });
+      })();
+    </script>
+  )
+}
