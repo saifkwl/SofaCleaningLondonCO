@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site, telHref } from '../data/site';
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'Get a quote', item: `${site.domain}/get-a-quote/` },
+    ],
+  },
+];
+
+const steps = [
+  {
+    n: '1',
+    title: 'Take one photo from the doorway',
+    body: 'Get the whole piece in frame rather than a close-up. If there is a specific stain you are worried about, add a second close-up of that. Daylight helps but is not essential.',
+  },
+  {
+    n: '2',
+    title: 'Send it with your postcode',
+    body: 'Use the form here or just message the number directly. Tell us roughly when suits you — we work every day from 8am to 8pm, including evenings and weekends.',
+  },
+  {
+    n: '3',
+    title: 'Get a fixed price back',
+    body: 'Usually within the hour. It includes an honest note on anything we think will only reduce rather than disappear, so there are no surprises on the day.',
+  },
+];
+---
+
+<Base
+  title="Get a Fixed Price Quote | Sofa & Carpet Cleaning London"
+  description="Send a photo and your postcode on WhatsApp for a fixed price on sofa, upholstery or carpet cleaning anywhere in London. Free, usually answered within the hour."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Free quote"
+    title="One photo is usually all we need"
+    lede="No site visits, no sales appointment, no pressure. A picture from the doorway and your postcode gets you a fixed price that does not change on the day."
+    trail={[{ href: '/get-a-quote/', label: 'Get a quote' }]}
+    chips={[site.hours, 'Answered within the hour', 'No obligation']}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.15fr]">
+      <div>
+        <h2 class="font-display text-2xl font-semibold text-ink-950">How it works</h2>
+        <ol class="mt-8 space-y-8">
+          {
+            steps.map((s) => (
+              <li class="flex gap-5">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-950 font-display text-lg font-semibold text-sand-50">
+                  {s.n}
+                </span>
+                <div>
+                  <h3 class="text-lg font-semibold text-ink-950">{s.title}</h3>
+                  <p class="mt-2 leading-relaxed text-ink-800">{s.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="mt-12 rounded-card border border-ink-950/10 bg-sand-100 p-7">
+          <h3 class="font-display text-lg font-semibold text-ink-950">Prefer to talk?</h3>
+          <p class="mt-2 leading-relaxed text-ink-800">
+            Call {site.phoneDisplay}. Someone who actually does the cleaning will answer, so you can
+            ask the awkward questions about whether a particular mark will come out.
+          </p>
+          <a
+            href={telHref}
+            class="mt-5 inline-flex items-center gap-2 rounded-full bg-ink-950 px-6 py-3.5 font-bold text-sand-50"
+          >
+            Call {site.phoneDisplay}
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-card border border-ink-950/10 bg-sand-50 p-7 shadow-lift md:p-10">
+        <h2 class="font-display text-2xl font-semibold text-ink-950">Tell us about the job</h2>
+        <p class="mt-2 leading-relaxed text-ink-800">
+          This writes your WhatsApp message for you. You will see exactly what it says before
+          anything opens, and you press send yourself.
+        </p>
+        <div class="mt-7">
+          <QuoteForm id="main-quote" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

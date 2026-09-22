@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Privacy Notice | Sofa Cleaning London"
+  description="How Sofa Cleaning London handles the information you send us, what the quote form does with your details, and your rights under UK GDPR."
+  noindex
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Privacy notice"
+    lede="Plain English version: this website does not collect anything about you. The quote form builds a message on your own phone and you decide whether to send it."
+    trail={[{ href: '/privacy/', label: 'Privacy' }]}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <article class="prose-body max-w-2xl">
+      <h2 class="mt-0">What this website collects</h2>
+      <p>
+        Nothing automatically. There is no analytics script, no advertising pixel, no tracking
+        cookie and no third-party embed on these pages. We do not set cookies at all.
+      </p>
+      <p>
+        Your web host will keep standard server logs, which typically include IP addresses and
+        requested URLs, for security and diagnostics. That is normal for any website and is not
+        used by us to identify or profile anyone.
+      </p>
+
+      <h2>What the quote form actually does</h2>
+      <p>
+        The quote form runs entirely in your browser. When you press the button it assembles the
+        details you typed into a text message, shows that message to you, and then — only if you
+        press the second button — opens WhatsApp with the text pre-filled.
+      </p>
+      <p>
+        Nothing is submitted to this website, stored on a server, or emailed anywhere. You still
+        press send inside WhatsApp yourself, and until you do, your details have not gone anywhere.
+        If you close the page instead, nothing has been shared.
+      </p>
+      <p>
+        Once you do send it, the message is handled by WhatsApp, which is operated by Meta under its
+        own privacy terms. We receive it as an ordinary WhatsApp message on the business phone.
+      </p>
+
+      <h2>What we do with what you send us</h2>
+      <p>
+        We use the information you give us — your name, contact number, address or postcode, and
+        what needs cleaning — for one purpose: to quote for the work and to carry it out. The lawful
+        basis is performance of a contract, or the steps you ask us to take before entering one.
+      </p>
+      <p>
+        Photographs you send us are used to prepare your quote. We will not publish a photograph of
+        your home or your furniture anywhere — including the before-and-after gallery on this site —
+        unless you have specifically agreed to it.
+      </p>
+      <p>
+        We do not sell your details, share them with marketing companies, or add you to a mailing
+        list.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>
+        Job records and invoices are kept for as long as UK tax and accounting rules require,
+        currently six years. Message threads and quote enquiries that do not become bookings are
+        deleted once they are clearly no longer relevant.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        Under UK GDPR you can ask us for a copy of the information we hold about you, ask us to
+        correct it, ask us to delete it, or object to how we are using it. Email
+        <a href={`mailto:${site.email}`}>{site.email}</a> or call
+        <a href={`tel:${site.phoneE164}`}>{site.phoneDisplay}</a> and we will deal with it within a
+        month.
+      </p>
+      <p>
+        If you are not satisfied with how we have handled your information, you can complain to the
+        Information Commissioner's Office, the UK supervisory authority for data protection.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        {site.name} — <a href={`tel:${site.phoneE164}`}>{site.phoneDisplay}</a> or
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </article>
+  </section>
+</Base>

@@ -1,0 +1,143 @@
+---
+import Logo from './Logo.astro';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+import { site, telHref, whatsappHref, defaultWhatsappMessage } from '../data/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+
+const navLinks = [
+  { href: '/services/', label: 'Services' },
+  { href: '/areas/', label: 'Areas' },
+  { href: '/before-and-after/', label: 'Before & after' },
+  { href: '/prices/', label: 'Prices' },
+  { href: '/guides/', label: 'Guides' },
+  { href: '/reviews/', label: 'Reviews' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-sand-200/80 bg-sand-50/92 backdrop-blur-md">
+  <div class="container-page flex h-[4.5rem] items-center justify-between gap-4">
+    <a href="/" class="shrink-0" aria-label={`${site.name} — home`}>
+      <Logo />
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+      {
+        navLinks.map((l) => (
+          <a
+            href={l.href}
+            aria-current={isActive(l.href) ? 'page' : undefined}
+            class:list={[
+              'rounded-full px-3.5 py-2 text-[0.9rem] font-medium transition-colors',
+              isActive(l.href)
+                ? 'bg-ink-950 text-sand-50'
+                : 'text-ink-900 hover:bg-sand-200/70',
+            ]}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={telHref}
+        class="hidden items-center gap-2 rounded-full border border-ink-950/15 px-4 py-2.5 text-sm font-semibold text-ink-950 transition-colors hover:border-ink-950/40 sm:inline-flex"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M2 4.5A2.5 2.5 0 0 1 4.5 2h1.1a1.5 1.5 0 0 1 1.44 1.09l.62 2.16a1.5 1.5 0 0 1-.4 1.5l-.9.87a11.5 11.5 0 0 0 4.52 4.52l.87-.9a1.5 1.5 0 0 1 1.5-.4l2.16.62A1.5 1.5 0 0 1 18 12.9V14a2.5 2.5 0 0 1-2.5 2.5h-.5C7.82 16.5 2 10.68 2 3.5v-.5Z"/>
+        </svg>
+        {site.phoneDisplay}
+      </a>
+      <a
+        href={whatsappHref(defaultWhatsappMessage)}
+        rel="noopener"
+        class="hidden items-center gap-2 rounded-full bg-zest-400 px-4 py-2.5 text-sm font-bold text-ink-950 transition-transform hover:-translate-y-px hover:bg-zest-500 sm:inline-flex"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.25.7-1.45 1.33-2 1.4-.53.07-1.18.1-1.9-.12a16 16 0 0 1-1.73-.64 12.3 12.3 0 0 1-4.7-4.16c-.35-.47-1.1-1.56-1.1-2.98 0-1.42.74-2.12 1-2.4.26-.3.57-.37.76-.37h.55c.18 0 .42-.07.65.5l.9 2.16c.07.15.12.33.02.53-.1.2-.15.32-.3.5l-.45.52c-.15.15-.3.31-.13.61.17.3.75 1.24 1.61 2 1.11.99 2.05 1.3 2.34 1.45.3.15.47.13.64-.08l.92-1.07c.2-.25.4-.2.67-.12l2.05.97c.3.15.5.22.57.34.07.12.07.7-.18 1.4Z"/>
+        </svg>
+        WhatsApp
+      </a>
+
+      <details class="relative lg:hidden" id="mobile-nav">
+        <summary
+          class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-ink-950/15 text-ink-950 [&::-webkit-details-marker]:hidden"
+          aria-label="Open menu"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M3 6h14M3 10h14M3 14h14" />
+          </svg>
+        </summary>
+        <div
+          class="absolute right-0 top-14 max-h-[75vh] w-[min(21rem,85vw)] overflow-y-auto rounded-3xl border border-sand-200 bg-sand-50 p-5 shadow-pop"
+        >
+          <nav aria-label="Mobile">
+            <ul class="space-y-1">
+              {
+                navLinks.map((l) => (
+                  <li>
+                    <a href={l.href} class="block rounded-xl px-3 py-2.5 font-medium text-ink-950 hover:bg-sand-100">
+                      {l.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+            <p class="mt-4 px-3 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ink-600">
+              Popular services
+            </p>
+            <ul class="mt-1.5 space-y-0.5">
+              {
+                services.slice(0, 5).map((s) => (
+                  <li>
+                    <a href={`/services/${s.slug}/`} class="block rounded-xl px-3 py-2 text-sm text-ink-800 hover:bg-sand-100">
+                      {s.nav}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+            <p class="mt-4 px-3 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ink-600">
+              Areas
+            </p>
+            <ul class="mt-1.5 flex flex-wrap gap-1.5 px-3">
+              {
+                areas.map((a) => (
+                  <li>
+                    <a href={`/areas/${a.slug}/`} class="inline-block rounded-full bg-sand-100 px-3 py-1.5 text-sm text-ink-800 hover:bg-sand-200">
+                      {a.name}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+            <a
+              href="/get-a-quote/"
+              class="mt-5 block rounded-full bg-ink-950 px-4 py-3 text-center font-bold text-sand-50"
+            >
+              Get a fixed price
+            </a>
+          </nav>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  // Close the mobile menu on outside click and on Escape.
+  (() => {
+    const nav = document.getElementById('mobile-nav');
+    if (!nav) return;
+    document.addEventListener('click', (e) => {
+      if (nav.open && !nav.contains(e.target)) nav.open = false;
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') nav.open = false;
+    });
+  })();
+</script>

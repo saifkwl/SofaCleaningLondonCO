@@ -1,0 +1,107 @@
+---
+import Logo from './Logo.astro';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+import { guides } from '../data/guides';
+import { site, telHref, whatsappHref, defaultWhatsappMessage } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 bg-ink-950 text-sand-100">
+  <div class="container-page py-16">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div>
+        <Logo tone="light" />
+        <p class="mt-5 max-w-sm text-sm leading-relaxed text-sand-200/80">
+          Upholstery and carpet cleaning across Greater London. Fibre-tested methods, honest
+          expectations, and real before-and-after photographs from actual jobs.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2.5">
+          <a
+            href={telHref}
+            class="inline-flex items-center gap-2 rounded-full border border-sand-100/25 px-4 py-2.5 text-sm font-semibold text-sand-50 hover:border-sand-100/60"
+          >
+            Call {site.phoneDisplay}
+          </a>
+          <a
+            href={whatsappHref(defaultWhatsappMessage)}
+            rel="noopener"
+            class="inline-flex items-center gap-2 rounded-full bg-zest-400 px-4 py-2.5 text-sm font-bold text-ink-950 hover:bg-zest-500"
+          >
+            WhatsApp us
+          </a>
+        </div>
+        <p class="mt-5 text-sm text-sand-200/70">{site.hours}</p>
+      </div>
+
+      <nav aria-labelledby="f-services">
+        <h2 id="f-services" class="font-display text-base font-semibold text-sand-50">Services</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {
+            services.map((s) => (
+              <li>
+                <a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href={`/services/${s.slug}/`}>
+                  {s.nav}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="f-areas">
+        <h2 id="f-areas" class="font-display text-base font-semibold text-sand-50">Areas we cover</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {
+            areas.map((a) => (
+              <li>
+                <a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href={`/areas/${a.slug}/`}>
+                  {a.name} <span class="text-sand-500">{a.postcodes[0]}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <nav aria-labelledby="f-more">
+          <h2 id="f-more" class="font-display text-base font-semibold text-sand-50">More</h2>
+          <ul class="mt-4 space-y-2.5 text-sm">
+            <li><a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href="/before-and-after/">Before & after gallery</a></li>
+            <li><a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href="/prices/">Prices</a></li>
+            <li><a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href="/reviews/">Customer reviews</a></li>
+            <li><a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href="/how-we-clean/">How we clean</a></li>
+            <li><a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href="/about/">About us</a></li>
+            <li><a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href="/contact/">Contact</a></li>
+            <li><a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href="/get-a-quote/">Get a fixed price</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-guides" class="mt-8">
+          <h2 id="f-guides" class="font-display text-base font-semibold text-sand-50">Guides</h2>
+          <ul class="mt-4 space-y-2.5 text-sm">
+            {
+              guides.map((g) => (
+                <li>
+                  <a class="text-sand-200/80 underline-offset-4 hover:text-zest-400 hover:underline" href={`/guides/${g.slug}/`}>
+                    {g.nav}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-4 border-t border-sand-100/15 pt-8 text-sm text-sand-200/60 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} {site.name}. Covering Greater London.</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+        <li><a class="underline-offset-4 hover:text-sand-50 hover:underline" href="/sitemap/">Site index</a></li>
+        <li><a class="underline-offset-4 hover:text-sand-50 hover:underline" href="/privacy/">Privacy</a></li>
+        <li><a class="underline-offset-4 hover:text-sand-50 hover:underline" href="/terms/">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,103 @@
+---
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyContactBar from '../components/StickyContactBar.astro';
+import Schema from '../components/Schema.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra JSON-LD nodes for this page, merged into the site graph */
+  schema?: Record<string, unknown>[];
+  /** Set true on pages that must not be indexed */
+  noindex?: boolean;
+  ogImage?: string;
+}
+
+const { title, description, schema = [], noindex = false, ogImage } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.domain).href;
+const ogUrl = new URL(ogImage ?? '/og-default.jpg', site.domain).href;
+
+/**
+ * Staging guard. Until the owner has confirmed pricing and contact details,
+ * PUBLIC_ALLOW_INDEXING stays unset and every page ships noindex.
+ */
+const indexingAllowed = import.meta.env.PUBLIC_ALLOW_INDEXING === 'true';
+const robots = !indexingAllowed || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
+
+const business = {
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${site.domain}/#business`,
+  name: site.name,
+  url: `${site.domain}/`,
+  telephone: site.phoneE164,
+  email: site.email,
+  description:
+    'Sofa, upholstery and carpet cleaning across Greater London. Hot water extraction, low-moisture velvet and leather work, stain and odour removal.',
+  priceRange: '££',
+  areaServed: { '@type': 'City', name: 'London', '@id': 'https://www.wikidata.org/wiki/Q84' },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '08:00',
+      closes: '20:00',
+    },
+  ],
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${site.domain}/#website`,
+  url: `${site.domain}/`,
+  name: site.name,
+  publisher: { '@id': `${site.domain}/#business` },
+  inLanguage: 'en-GB',
+};
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#05201f" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <Schema schema={[business, website, ...schema]} />
+  </head>
+  <body class="min-h-screen antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink-950 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-sand-50"
+    >
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" class="pb-24 md:pb-0">
+      <slot />
+    </main>
+    <Footer />
+    <StickyContactBar />
+  </body>
+</html>

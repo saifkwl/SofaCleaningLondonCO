@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ReviewWall from '../components/ReviewWall.astro';
+import CtaBand from '../components/CtaBand.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import { reviews } from '../data/reviews';
+import { galleryPairs } from '../data/gallery';
+import { site } from '../data/site';
+
+const showcase = galleryPairs.slice(0, 3);
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'Reviews', item: `${site.domain}/reviews/` },
+    ],
+  },
+];
+---
+
+<Base
+  title="Customer Reviews | Sofa Cleaning London"
+  description="Messages sent to us by customers after their sofa and carpet cleaning, quoted verbatim, with the original screenshots."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Reviews"
+    title="What customers wrote to us afterwards"
+    lede="These are messages people sent us unprompted after their clean. They are quoted word for word, and you can open the original screenshot beside each one."
+    trail={[{ href: '/reviews/', label: 'Reviews' }]}
+    chips={[`${reviews.length} customer messages`, 'Screenshots included']}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <ReviewWall showScreenshots />
+
+    <div class="mt-14 rounded-card border border-ink-950/10 bg-sand-100 p-8 md:p-10">
+      <h2 class="font-display text-xl font-semibold text-ink-950">
+        Why there is no star rating on this page
+      </h2>
+      <div class="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-800">
+        <p>
+          You will notice we do not display an average rating or a review count anywhere on this
+          site. That is deliberate. A rating badge is only meaningful if it is tied to a public
+          profile that anybody can go and verify for themselves, and the number matches.
+        </p>
+        <p>
+          Plenty of trade sites display a "4.9 from 300 reviews" graphic that leads nowhere and
+          cannot be checked. We would rather show you the actual messages, the actual names, and the
+          actual screenshots — and let you judge.
+        </p>
+        <p>
+          If you would like to speak to a recent customer in your area before booking, ask us. We
+          will check who is happy to be contacted and put you in touch.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sand-100 py-14 md:py-20">
+    <div class="container-page">
+      <div class="max-w-2xl">
+        <h2 class="font-display text-3xl font-semibold text-ink-950">The jobs behind the messages</h2>
+        <p class="mt-4 leading-relaxed text-ink-800">
+          Reviews are easy to write. These are harder to fake — same room, same angle, same light,
+          taken on the day.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-8 md:grid-cols-3">
+        {
+          showcase.map((p) => (
+            <BeforeAfter
+              id={p.id}
+              label={p.label}
+              caption={p.caption}
+              beforeAlt={p.beforeAlt}
+              afterAlt={p.afterAlt}
+            />
+          ))
+        }
+      </div>
+      <a
+        href="/before-and-after/"
+        class="mt-10 inline-flex items-center gap-2 rounded-full border-2 border-ink-950/15 px-6 py-3.5 font-bold text-ink-950 hover:border-ink-950/45"
+      >
+        See all {galleryPairs.length} jobs
+        <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

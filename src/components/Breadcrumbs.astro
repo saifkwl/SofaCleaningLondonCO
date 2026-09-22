@@ -1,0 +1,35 @@
+---
+interface Props {
+  trail: { href: string; label: string }[];
+  tone?: 'dark' | 'light';
+}
+const { trail, tone = 'dark' } = Astro.props;
+const items = [{ href: '/', label: 'Home' }, ...trail];
+const muted = tone === 'light' ? 'text-sand-200/70' : 'text-ink-700';
+const strong = tone === 'light' ? 'text-sand-50' : 'text-ink-950';
+---
+
+<nav aria-label="Breadcrumb" class={`text-sm ${muted}`}>
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+    {
+      items.map((item, i) => (
+        <li class="flex items-center gap-2">
+          {i > 0 && (
+            <span aria-hidden="true" class="opacity-50">
+              /
+            </span>
+          )}
+          {i === items.length - 1 ? (
+            <span class={`font-semibold ${strong}`} aria-current="page">
+              {item.label}
+            </span>
+          ) : (
+            <a href={item.href} class="underline-offset-4 hover:underline">
+              {item.label}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

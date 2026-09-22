@@ -1,0 +1,240 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import BeforeAfter from '../../components/BeforeAfter.astro';
+import PriceTable from '../../components/PriceTable.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import ReviewWall from '../../components/ReviewWall.astro';
+import { services, serviceBySlug } from '../../data/services';
+import { areas } from '../../data/areas';
+import { pairsForService, galleryPairs } from '../../data/gallery';
+import { site } from '../../data/site';
+
+export const getStaticPaths = (() =>
+  services.map((s) => ({ params: { slug: s.slug } }))) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const service = serviceBySlug(slug!)!;
+
+const pairs = pairsForService(service.slug).length
+  ? pairsForService(service.slug)
+  : service.galleryIds
+      .map((id) => galleryPairs.find((p) => p.id === id))
+      .filter((p): p is (typeof galleryPairs)[number] => Boolean(p));
+
+const related = service.related
+  .map((r) => serviceBySlug(r))
+  .filter((s): s is NonNullable<typeof s> => Boolean(s));
+
+/** Boroughs that list this service as one of their most requested. */
+const localAreas = areas.filter((a) => a.topServices.includes(service.slug));
+const url = `${site.domain}/services/${service.slug}/`;
+
+const schema = [
+  {
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: service.h1,
+    serviceType: service.nav,
+    description: service.metaDescription,
+    provider: { '@id': `${site.domain}/#business` },
+    areaServed: { '@type': 'City', name: 'London' },
+    url,
+    offers: service.priceRows.map((r) => ({
+      '@type': 'Offer',
+      name: r.item,
+      price: r.from.replace(/[^0-9.]/g, ''),
+      priceCurrency: 'GBP',
+      availability: 'https://schema.org/InStock',
+      url,
+    })),
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: service.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.domain}/services/` },
+      { '@type': 'ListItem', position: 3, name: service.nav, item: url },
+    ],
+  },
+];
+---
+
+<Base title={service.metaTitle} description={service.metaDescription} schema={schema}>
+  <PageHero
+    eyebrow="Service"
+    title={service.h1}
+    lede={service.summary}
+    trail={[
+      { href: '/services/', label: 'Services' },
+      { href: `/services/${service.slug}/`, label: service.nav },
+    ]}
+    chips={[`From ${service.priceRows[0].from}`, 'Greater London', site.hours]}
+  />
+
+  <div class="container-page grid gap-14 py-14 lg:grid-cols-[1fr_22rem] lg:py-20">
+    <article class="prose-body max-w-none">
+      {service.intro.map((p) => <p class="text-lg leading-relaxed text-ink-900">{p}</p>)}
+
+      <h2>What a {service.nav.toLowerCase()} visit includes</h2>
+      <ul class="not-prose mt-5 grid gap-3">
+        {
+          service.included.map((i) => (
+            <li class="flex items-start gap-3 rounded-2xl bg-sand-100 px-5 py-4">
+              <svg
+                class="mt-0.5 h-5 w-5 shrink-0 text-ink-600"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m4 10.5 4 4 8-9" />
+              </svg>
+              <span class="leading-relaxed text-ink-900">{i}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2>{service.detail.heading}</h2>
+      {service.detail.body.map((p) => <p>{p}</p>)}
+
+      {
+        pairs.length > 0 && (
+          <section class="not-prose my-14">
+            <h2 class="font-display text-2xl font-semibold text-ink-950">
+              {service.nav}: before and after
+            </h2>
+            <p class="mt-3 leading-relaxed text-ink-800">
+              Real customer jobs. Drag the handle to compare.
+            </p>
+            <div class="mt-8 grid gap-8 sm:grid-cols-2">
+              {pairs.slice(0, 4).map((p) => (
+                <BeforeAfter
+                  id={p.id}
+                  label={p.label}
+                  caption={p.caption}
+                  beforeAlt={p.beforeAlt}
+                  afterAlt={p.afterAlt}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <h2>{service.technique.heading}</h2>
+      {service.technique.body.map((p) => <p>{p}</p>)}
+
+      <section class="not-prose my-14">
+        <h2 class="font-display text-2xl font-semibold text-ink-950">
+          {service.nav} prices
+        </h2>
+        <p class="mt-3 leading-relaxed text-ink-800">
+          Starting prices. Send a photo on WhatsApp and we will confirm a fixed price for your
+          exact job before you book.
+        </p>
+        <div class="mt-6">
+          <PriceTable rows={service.priceRows} note={service.priceNote} />
+        </div>
+        <p class="mt-4 text-sm text-ink-700">
+          See the <a class="font-semibold underline underline-offset-4" href="/prices/">full price list</a> for
+          every service.
+        </p>
+      </section>
+
+      {
+        localAreas.length > 0 && (
+          <section class="not-prose my-14 rounded-card border border-ink-950/10 bg-sand-100 p-8">
+            <h2 class="font-display text-xl font-semibold text-ink-950">
+              Where we do most of this work
+            </h2>
+            <p class="mt-3 leading-relaxed text-ink-800">
+              {service.nav} is one of the most requested services in these boroughs. Each page
+              covers local access, parking and housing stock.
+            </p>
+            <ul class="mt-6 flex flex-wrap gap-2.5">
+              {localAreas.map((a) => (
+                <li>
+                  <a
+                    href={`/areas/${a.slug}/`}
+                    class="inline-flex items-baseline gap-2 rounded-full border border-ink-950/15 bg-sand-50 px-4 py-2.5 text-sm font-semibold text-ink-950 hover:border-ink-950/45"
+                  >
+                    {service.nav} in {a.name}
+                    <span class="text-xs font-normal text-ink-600">{a.postcodes[0]}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </article>
+
+    <aside class="lg:sticky lg:top-24 lg:self-start">
+      <div class="rounded-card border border-ink-950/10 bg-sand-50 p-6 shadow-lift">
+        <h2 class="font-display text-xl font-semibold text-ink-950">Get a fixed price</h2>
+        <p class="mt-2 text-sm leading-relaxed text-ink-800">
+          Takes about thirty seconds. You see the message before it opens.
+        </p>
+        <div class="mt-5">
+          <QuoteForm id={`aside-${service.slug}`} preselect={service.slug} compact />
+        </div>
+      </div>
+
+      <nav class="mt-6 rounded-card border border-ink-950/10 bg-sand-100 p-6" aria-labelledby="related-heading">
+        <h2 id="related-heading" class="font-display text-lg font-semibold text-ink-950">
+          Related services
+        </h2>
+        <ul class="mt-4 space-y-3">
+          {
+            related.map((r) => (
+              <li>
+                <a
+                  href={`/services/${r.slug}/`}
+                  class="group flex items-start gap-3 text-ink-900 hover:text-ink-950"
+                >
+                  <svg class="mt-1.5 h-3.5 w-3.5 shrink-0 text-ink-600" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" />
+                  </svg>
+                  <span>
+                    <span class="font-semibold underline-offset-4 group-hover:underline">{r.nav}</span>
+                    <span class="mt-0.5 block text-sm text-ink-700">{r.summary}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </aside>
+  </div>
+
+  <section class="bg-sand-100 py-16 md:py-20">
+    <div class="container-page">
+      <h2 class="font-display text-2xl font-semibold text-ink-950">What customers said afterwards</h2>
+      <div class="mt-8">
+        <ReviewWall />
+      </div>
+    </div>
+  </section>
+
+  <Faq faqs={service.faqs} heading={`${service.nav}: your questions`} />
+
+  <CtaBand context={service.nav.toLowerCase()} />
+</Base>

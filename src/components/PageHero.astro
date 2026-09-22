@@ -1,0 +1,41 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede?: string;
+  trail: { href: string; label: string }[];
+  /** Small factual chips, e.g. postcodes */
+  chips?: string[];
+}
+const { eyebrow, title, lede, trail, chips = [] } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-ink-950 text-sand-50">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-40 -top-40 h-[28rem] w-[28rem] rounded-full bg-ink-700/40 blur-3xl"
+  >
+  </div>
+  <div class="container-page relative py-10 md:py-14">
+    <Breadcrumbs trail={trail} tone="light" />
+    <p class="eyebrow mt-8 text-zest-400"><span class="h-px w-6 bg-zest-400"></span>{eyebrow}</p>
+    <h1 class="mt-3 max-w-4xl text-[2.1rem] font-semibold leading-[1.1] md:text-[3.4rem]">
+      {title}
+    </h1>
+    {lede && <p class="mt-6 max-w-2xl text-lg leading-relaxed text-sand-200/85">{lede}</p>}
+    {
+      chips.length > 0 && (
+        <ul class="mt-7 flex flex-wrap gap-2">
+          {chips.map((c) => (
+            <li class="rounded-full border border-sand-100/20 px-3.5 py-1.5 text-sm font-medium text-sand-100/85">
+              {c}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+  <div class="h-8 rounded-t-[2.5rem] bg-sand-50"></div>
+</section>

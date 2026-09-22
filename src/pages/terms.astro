@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Terms of Service | Sofa Cleaning London"
+  description="The terms on which Sofa Cleaning London provides upholstery and carpet cleaning, including quotes, access, cancellations and the limits of what cleaning can achieve."
+  noindex
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Terms of service"
+    lede="What you can expect from us and what we need from you. Written to be read rather than skipped."
+    trail={[{ href: '/terms/', label: 'Terms' }]}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <article class="prose-body max-w-2xl">
+      <h2 class="mt-0">Quotes</h2>
+      <p>
+        Prices shown on this site are starting prices for normally soiled items and are not offers
+        in themselves. A quote given from your photograph and description is fixed for that job as
+        described.
+      </p>
+      <p>
+        If, on arrival, the job is materially different from what was described — more items, more
+        rooms, heavy pet contamination, or a previous cleaning attempt that has to be reversed — we
+        will explain the difference and give you a revised price before starting. You are free to
+        decline at that point with nothing to pay.
+      </p>
+
+      <h2>What cleaning can and cannot do</h2>
+      <p>
+        We test fabrics before cleaning and will tell you what we expect to achieve. Cleaning
+        removes soiling. It does not reverse physical wear, abrasion, fading from sunlight, bleaching,
+        cracked or peeling finishes, or dye damage that has bonded to the fibre.
+      </p>
+      <p>
+        Where we believe a mark will only reduce rather than disappear, we will say so before we
+        start. Proceeding on that basis means the result is not a failure of the service.
+      </p>
+      <p>
+        If we consider a fabric cannot be cleaned safely, we will decline the item and explain why.
+        There is no charge for a visit that ends this way.
+      </p>
+
+      <h2>Access and preparation</h2>
+      <p>
+        We need reasonable access to the property, an electricity supply, and somewhere to park
+        within roughly thirty metres of the entrance. Where parking is controlled, a visitor permit
+        or pre-booked bay is the customer's responsibility; any parking charge or road charge that
+        applies will be itemised in your quote.
+      </p>
+      <p>
+        Please clear small items, breakables and floor clutter before we arrive. We move furniture
+        that two people can move safely, and we do not move pianos, aquariums, large electronics or
+        anything fixed in place.
+      </p>
+
+      <h2>Cancellation</h2>
+      <p>
+        Let us know as early as you can if you need to cancel or rearrange; there is no charge for
+        doing so with reasonable notice. If we arrive at a pre-arranged appointment and cannot gain
+        access, a call-out charge may apply.
+      </p>
+
+      <h2>Payment</h2>
+      <p>
+        Payment is due on completion unless agreed otherwise in writing. Commercial and letting-agent
+        work may be invoiced on agreed terms.
+      </p>
+
+      <h2>Problems</h2>
+      <p>
+        If you are unhappy with any part of the work, tell us within 48 hours and we will return to
+        look at it. Most issues — a mark that reappears by wicking, an area that dried unevenly — are
+        straightforward to put right, and we would much rather do that than leave you dissatisfied.
+      </p>
+      <p>
+        Nothing in these terms affects your statutory rights as a consumer under UK law.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        {site.name} — <a href={`tel:${site.phoneE164}`}>{site.phoneDisplay}</a> or
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </article>
+  </section>
+</Base>

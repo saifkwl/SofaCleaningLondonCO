@@ -1,0 +1,176 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ReviewWall from '../components/ReviewWall.astro';
+import { site } from '../data/site';
+import { galleryPairs } from '../data/gallery';
+import { areas } from '../data/areas';
+import { services } from '../data/services';
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'About', item: `${site.domain}/about/` },
+    ],
+  },
+  {
+    '@type': 'AboutPage',
+    '@id': `${site.domain}/about/#about`,
+    name: `About ${site.name}`,
+    mainEntity: { '@id': `${site.domain}/#business` },
+  },
+];
+---
+
+<Base
+  title="About Us | Sofa Cleaning London"
+  description="Who we are, how we work, and the things we will tell you that other cleaning companies would rather not — including when a stain is not coming out."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="About"
+    title="A cleaning company that tells you when the answer is no"
+    lede="We would rather turn down a job than take money for a result we do not think we can deliver. It costs us work in the short term and it is the only reason anybody calls us twice."
+    trail={[{ href: '/about/', label: 'About' }]}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+      <div class="prose-body">
+        <h2 class="mt-0">What we do</h2>
+        <p>
+          We clean upholstery and carpet in homes and businesses across Greater London — fabric and
+          leather sofas, corner units, velvet chairs, dining sets, armchairs, fitted carpet, stairs
+          and landings. We do stain work and genuine odour removal, tenancy check-out cleans, and
+          out-of-hours commercial work.
+        </p>
+        <p>
+          We do not do general domestic cleaning, oven cleaning, window cleaning or gardening. Doing
+          one thing means we can be good at it rather than adequate at ten things.
+        </p>
+
+        <h2>How we are different, concretely</h2>
+        <p>
+          Every trade site claims to be professional, reliable and competitively priced. Those words
+          cost nothing to type, so here are the things we actually do differently, each of which you
+          can check.
+        </p>
+        <p>
+          <strong>Every photograph on this site is a real job.</strong> There is no stock
+          photography anywhere on these pages. The before-and-after gallery is {galleryPairs.length}
+          {' '}pairs of our own photographs, taken on the day, in whatever light the room had. Some of
+          the after shots still have a hose or an air mover in frame. We left them in on purpose.
+        </p>
+        <p>
+          <strong>We publish no star rating.</strong> A rating graphic that leads nowhere and cannot
+          be verified is worth nothing, so we show the actual customer messages and the actual
+          screenshots instead, and let you judge them.
+        </p>
+        <p>
+          <strong>We tell you what will not come out.</strong> Dye-based stains that have been left
+          for months, bleached patches, physically worn traffic lanes, peeling bonded leather,
+          cracked hide — none of these are fixed by cleaning, and we will say so before you book
+          rather than making excuses afterwards.
+        </p>
+        <p>
+          <strong>The quote is the price.</strong> We quote from your photo and that is what you
+          pay. If the job turns out bigger than the photo showed, you hear about it before we start,
+          not when we hand you the bill.
+        </p>
+
+        <h2>Why the method matters more than the machine</h2>
+        <p>
+          Powerful equipment is table stakes in this industry — everybody has it and everybody
+          mentions it. What separates results is sequence and restraint: testing the fibre before
+          committing to a method, vacuuming properly before introducing water, letting the pre-spray
+          dwell, and taking out more moisture than went in.
+        </p>
+        <p>
+          Almost every rescue job we are called to — the patchy sofa, the brown watermark, the
+          carpet that smelled worse afterwards — was caused by skipping one of those, not by using
+          the wrong machine. Our <a href="/how-we-clean/">method page</a> sets out all seven steps
+          and why the order is not negotiable.
+        </p>
+      </div>
+
+      <aside class="space-y-6">
+        <div class="rounded-card border border-ink-950/10 bg-sand-100 p-7">
+          <h2 class="font-display text-xl font-semibold text-ink-950">At a glance</h2>
+          <dl class="mt-5 space-y-4 text-[0.95rem]">
+            <div>
+              <dt class="font-semibold text-ink-950">Covering</dt>
+              <dd class="text-ink-800">
+                Greater London, with {areas.length} detailed borough pages
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-ink-950">Services</dt>
+              <dd class="text-ink-800">{services.length} specialisms, upholstery and carpet only</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-ink-950">Hours</dt>
+              <dd class="text-ink-800">{site.hours}, including evenings and weekends</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-ink-950">Quotes</dt>
+              <dd class="text-ink-800">Fixed, from a photo, usually within the hour</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-ink-950">Contact</dt>
+              <dd class="text-ink-800">
+                <a class="underline underline-offset-4" href={`tel:${site.phoneE164}`}>
+                  {site.phoneDisplay}
+                </a> — call or WhatsApp
+              </dd>
+            </div>
+            {
+              site.pending.yearsTrading && (
+                <div>
+                  <dt class="font-semibold text-ink-950">Trading since</dt>
+                  <dd class="text-ink-800">{site.pending.yearsTrading} years</dd>
+                </div>
+              )
+            }
+            {
+              site.pending.insurance && (
+                <div>
+                  <dt class="font-semibold text-ink-950">Insurance</dt>
+                  <dd class="text-ink-800">{site.pending.insurance}</dd>
+                </div>
+              )
+            }
+          </dl>
+        </div>
+
+        <div class="rounded-card bg-ink-950 p-7 text-sand-50">
+          <h2 class="font-display text-xl font-semibold">Ask us the hard question</h2>
+          <p class="mt-3 leading-relaxed text-sand-200/85">
+            "Will this actually come out?" is the question everybody wants answered and most
+            companies dodge. Send a photo of the mark and you will get a straight answer, free,
+            whether or not it ends in a booking.
+          </p>
+          <a
+            href="/get-a-quote/"
+            class="mt-6 inline-flex items-center gap-2 rounded-full bg-zest-400 px-6 py-3.5 font-bold text-ink-950"
+          >
+            Ask about a stain
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-sand-100 py-14 md:py-20">
+    <div class="container-page">
+      <h2 class="font-display text-2xl font-semibold text-ink-950">What customers said afterwards</h2>
+      <div class="mt-8">
+        <ReviewWall />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import PriceTable from '../components/PriceTable.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { services } from '../data/services';
+import { site } from '../data/site';
+
+const priceFaqs = [
+  {
+    q: 'Is the price you quote the price I pay?',
+    a: 'Yes. We quote a fixed price from your photo and description, and that is what you pay. If the job turns out to be materially bigger than the photo suggested — more seats, an extra room, heavy pet contamination we could not see — we tell you before we start work, not after we have finished.',
+  },
+  {
+    q: 'Is there a minimum charge?',
+    a: 'Yes, there is a minimum call-out, because a single dining chair does not cover the travel and setup. Most people combine items: a sofa plus the stairs, or a dining set alongside a carpet clean. Combined bookings are considerably better value than separate visits.',
+  },
+  {
+    q: 'Do you charge extra for stairs, parking or travel?',
+    a: 'No travel surcharge anywhere in Greater London, and no surcharge for flights of stairs — our machine stays at ground level and we run hoses up. Where a road charge such as the Congestion Charge applies to your address, it is itemised separately in your quote so you can see exactly what it is.',
+  },
+  {
+    q: 'How do I pay?',
+    a: 'On completion, once you have seen the result. Bank transfer or card. For commercial and letting-agent work we invoice on standard terms.',
+  },
+  {
+    q: 'Are evenings and weekends more expensive?',
+    a: 'No. Evening and weekend slots are charged at the same rate, and for scheduled commercial work there is no out-of-hours surcharge either.',
+  },
+  {
+    q: 'What if the stain does not come out?',
+    a: 'We tell you what to expect before we start, which is the important part — some marks lift completely, some reduce, and a few are permanent. If we say something will come out and it does not, tell us and we will come back. If a fabric turns out to be one we cannot clean safely, we say so on the doorstep and there is nothing to pay.',
+  },
+];
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'Prices', item: `${site.domain}/prices/` },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${site.domain}/prices/#faq`,
+    mainEntity: priceFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<Base
+  title="Sofa & Carpet Cleaning Prices London | Fixed Quotes"
+  description="Full price list for sofa, upholstery and carpet cleaning in London. Fabric and leather sofas, chairs, carpets, stairs, end of tenancy and commercial."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Prices"
+    title="What it costs, written down"
+    lede="Starting prices for everything we do. The figure we quote from your photo is the figure you pay — we would rather lose a booking to an honest number than win one and argue about it on the doorstep."
+    trail={[{ href: '/prices/', label: 'Prices' }]}
+    chips={['Fixed quotes', 'No travel surcharge', 'Pay on completion']}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1fr]">
+      <div>
+        <h2 class="font-display text-2xl font-semibold text-ink-950">How pricing works</h2>
+        <div class="mt-4 space-y-4 leading-relaxed text-ink-800">
+          <p>
+            Upholstery is priced per item and carpet is priced per room, because that is how the
+            work actually divides up. Corner sofas are priced by seat count rather than by guessing
+            what "large" means.
+          </p>
+          <p>
+            Everything below is a starting price for a normally soiled item. Heavy pet
+            contamination, severe staining, or a fabric that has already been cleaned badly by
+            someone else takes longer, and we will tell you that when we quote rather than adding it
+            on afterwards.
+          </p>
+          <p>
+            The quickest way to a firm number is a photo. Stand in the doorway, get the whole piece
+            in frame, and send it on WhatsApp with your postcode.
+          </p>
+        </div>
+      </div>
+      <div class="rounded-card border border-ink-950/10 bg-sand-100 p-8">
+        <h2 class="font-display text-xl font-semibold text-ink-950">What is always included</h2>
+        <ul class="mt-5 space-y-3">
+          {
+            [
+              'Fibre identification and a colourfastness test before we start',
+              'Full dry vacuum pass — the step most of the weight comes out at',
+              'Spot treatment for individual marks, matched to the stain type',
+              'Pile grooming and drying passes, not just an extraction pass',
+              'An air mover set up on request, at no extra cost',
+              'An honest answer about what will and will not come out',
+            ].map((i) => (
+              <li class="flex items-start gap-3 leading-relaxed text-ink-900">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-ink-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m4 10.5 4 4 8-9" />
+                </svg>
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sand-100 py-14 md:py-20">
+    <div class="container-page">
+      <h2 class="font-display text-3xl font-semibold text-ink-950">Full price list</h2>
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        {
+          services.map((s) => (
+            <div>
+              <PriceTable rows={s.priceRows} note={s.priceNote} title={s.nav} />
+              <a
+                href={`/services/${s.slug}/`}
+                class="mt-3 inline-flex items-center gap-2 text-sm font-bold text-ink-700 underline underline-offset-4"
+              >
+                About {s.nav.toLowerCase()}
+                <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Faq faqs={priceFaqs} heading="Questions about pricing" />
+
+  <CtaBand
+    heading="Want your exact number?"
+    body="Send a photo from the doorway with your postcode. Fixed price back, usually within the hour, and it does not change on the day."
+  />
+</Base>

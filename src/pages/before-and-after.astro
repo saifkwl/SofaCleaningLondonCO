@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ReviewWall from '../components/ReviewWall.astro';
+import { galleryPairs } from '../data/gallery';
+import { services } from '../data/services';
+import { site } from '../data/site';
+
+const grouped = services
+  .map((s) => ({ service: s, pairs: galleryPairs.filter((p) => p.service === s.slug) }))
+  .filter((g) => g.pairs.length > 0);
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Before & after',
+        item: `${site.domain}/before-and-after/`,
+      },
+    ],
+  },
+  {
+    '@type': 'ImageGallery',
+    name: 'Before and after upholstery and carpet cleaning in London',
+    description: `${galleryPairs.length} real customer jobs photographed before and after cleaning.`,
+    url: `${site.domain}/before-and-after/`,
+  },
+];
+---
+
+<Base
+  title="Before & After Photos | Sofa Cleaning London"
+  description={`${galleryPairs.length} real customer jobs photographed before and after cleaning — fabric and leather sofas, velvet chairs, dining chairs, carpets and stair carpet. No stock photos.`}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Our work"
+    title="Before and after, on real customer jobs"
+    lede="Every pair below is the same item, in the same room, from the same angle. Nothing is staged, retouched or bought from a stock library. Drag the handle to compare."
+    trail={[{ href: '/before-and-after/', label: 'Before & after' }]}
+    chips={[`${galleryPairs.length} jobs`, 'Photographed on site', 'No stock imagery']}
+  />
+
+  <section class="container-page py-12 md:py-16">
+    <nav aria-label="Jump to a category" class="flex flex-wrap gap-2.5">
+      {
+        grouped.map((g) => (
+          <a
+            href={`#${g.service.slug}`}
+            class="rounded-full border border-ink-950/15 bg-sand-50 px-4 py-2.5 text-sm font-semibold text-ink-950 hover:border-ink-950/45"
+          >
+            {g.service.nav}
+            <span class="ml-1.5 font-normal text-ink-600">{g.pairs.length}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </section>
+
+  {
+    grouped.map((g, gi) => (
+      <section
+        id={g.service.slug}
+        class:list={['py-14 md:py-16', gi % 2 === 1 && 'bg-sand-100']}
+        aria-labelledby={`h-${g.service.slug}`}
+      >
+        <div class="container-page">
+          <div class="flex flex-wrap items-end justify-between gap-5">
+            <div class="max-w-2xl">
+              <h2 id={`h-${g.service.slug}`} class="font-display text-3xl font-semibold text-ink-950">
+                {g.service.nav}
+              </h2>
+              <p class="mt-3 leading-relaxed text-ink-800">{g.service.summary}</p>
+            </div>
+            <a
+              href={`/services/${g.service.slug}/`}
+              class="inline-flex items-center gap-2 rounded-full border-2 border-ink-950/15 px-5 py-3 text-sm font-bold text-ink-950 hover:border-ink-950/45"
+            >
+              About this service
+              <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {g.pairs.map((p, i) => (
+              <BeforeAfter
+                id={p.id}
+                label={p.label}
+                caption={p.caption}
+                beforeAlt={p.beforeAlt}
+                afterAlt={p.afterAlt}
+                eager={gi === 0 && i === 0}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="container-page py-16 md:py-20">
+    <div class="rounded-card border border-ink-950/10 bg-sand-100 p-8 md:p-12">
+      <h2 class="font-display text-2xl font-semibold text-ink-950">
+        What these photographs do and do not show
+      </h2>
+      <div class="mt-6 grid gap-8 md:grid-cols-2">
+        <div class="space-y-4 leading-relaxed text-ink-800">
+          <p>
+            These are our own job photographs, taken on the day with a phone, in whatever light the
+            room had. That is why some are dim and some are bright — a before shot taken in the
+            evening and an after shot taken at noon would be flattering and dishonest, so we do not
+            do it.
+          </p>
+          <p>
+            Several of the after shots have equipment still in frame: an extraction wand on the
+            stairs, a hose behind a chair, an air mover next to an armchair. We have left them in
+            deliberately. It is evidence that the picture was taken at the job rather than staged
+            afterwards.
+          </p>
+        </div>
+        <div class="space-y-4 leading-relaxed text-ink-800">
+          <p>
+            What they do not show is a guarantee. These were the results on those items, with those
+            fabrics and those stains. Your sofa may do better or worse depending on the fibre, how
+            long the mark has been there, and whether anything has already been tried on it.
+          </p>
+          <p>
+            That is why we would rather look at a photo of your actual piece and give you an honest
+            expectation than let a gallery make a promise on our behalf.
+          </p>
+        </div>
+      </div>
+      <a
+        href="/how-we-clean/"
+        class="mt-8 inline-flex items-center gap-2 font-bold text-ink-800 underline underline-offset-4"
+      >
+        Read how the method works
+        <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="container-page pb-16">
+    <h2 class="font-display text-2xl font-semibold text-ink-950">What those customers said</h2>
+    <div class="mt-8">
+      <ReviewWall />
+    </div>
+  </section>
+
+  <CtaBand
+    heading="Send a photo of yours"
+    body="We will tell you what we would expect to get out of it — honestly, including when the answer is 'that one will only reduce'. Then a fixed price if you want one."
+  />
+</Base>

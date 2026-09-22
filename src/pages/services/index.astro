@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import MethodRail from '../../components/MethodRail.astro';
+import { services } from '../../data/services';
+import { areas } from '../../data/areas';
+import { site } from '../../data/site';
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.domain}/services/` },
+    ],
+  },
+  {
+    '@type': 'ItemList',
+    name: 'Upholstery and carpet cleaning services in London',
+    itemListElement: services.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: s.h1,
+      url: `${site.domain}/services/${s.slug}/`,
+    })),
+  },
+];
+---
+
+<Base
+  title="Upholstery & Carpet Cleaning Services | London"
+  description="Every service we offer in London: fabric, corner, leather and velvet sofas, chairs, carpets, stairs, stain and odour removal, tenancy and commercial work."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Services"
+    title="Ten services, each with its own method"
+    lede="Fabric fails differently from leather, and velvet fails differently from both. These pages explain what actually goes wrong with each material, what we do about it, and what it costs."
+    trail={[{ href: '/services/', label: 'Services' }]}
+  />
+
+  <section class="container-page py-16 md:py-20">
+    <ul class="grid gap-5 md:grid-cols-2">
+      {
+        services.map((s) => (
+          <li>
+            <a
+              href={`/services/${s.slug}/`}
+              class="group flex h-full flex-col rounded-card border border-ink-950/10 bg-sand-50 p-8 transition-all hover:-translate-y-1 hover:border-ink-950/25 hover:shadow-lift"
+            >
+              <h2 class="font-display text-2xl font-semibold text-ink-950">{s.nav}</h2>
+              <p class="mt-3 text-[0.97rem] leading-relaxed text-ink-800">{s.summary}</p>
+              <p class="mt-5 line-clamp-3 flex-1 text-[0.92rem] leading-relaxed text-ink-700">
+                {s.intro[0]}
+              </p>
+              <div class="mt-6 flex items-center justify-between border-t border-ink-950/10 pt-5">
+                <span class="font-display text-lg font-semibold text-ink-800">
+                  From {s.priceRows[0].from}
+                </span>
+                <span class="inline-flex items-center gap-2 text-sm font-bold text-ink-700">
+                  Read more
+                  <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sand-100 transition-colors group-hover:bg-zest-400">
+                    <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                      <path d="M3 8h10M9 4l4 4-4 4" />
+                    </svg>
+                  </span>
+                </span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <MethodRail />
+
+  <section class="bg-sand-100 py-16 md:py-20">
+    <div class="container-page">
+      <h2 class="font-display text-2xl font-semibold text-ink-950">
+        Every service, in every area we cover
+      </h2>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-800">
+        Pricing is the same across Greater London. The borough pages cover the local practicalities —
+        parking, building access, housing stock and how quickly things dry.
+      </p>
+      <ul class="mt-8 flex flex-wrap gap-2.5">
+        {
+          areas.map((a) => (
+            <li>
+              <a
+                href={`/areas/${a.slug}/`}
+                class="inline-flex items-baseline gap-2 rounded-full border border-ink-950/15 bg-sand-50 px-4 py-2.5 text-sm font-semibold text-ink-950 hover:border-ink-950/45"
+              >
+                {a.name}
+                <span class="text-xs font-normal text-ink-600">{a.postcodes[0]}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

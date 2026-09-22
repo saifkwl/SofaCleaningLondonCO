@@ -1,0 +1,185 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import MethodRail from '../components/MethodRail.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import { galleryPairs } from '../data/gallery';
+import { guides } from '../data/guides';
+import { site } from '../data/site';
+
+const pairs = ['fabric-sofa-2', 'stair-carpet-2'].
+  map((id) => galleryPairs.find((p) => p.id === id)).
+  filter((p): p is (typeof galleryPairs)[number] => Boolean(p));
+
+const faqs = [
+  {
+    q: 'What is the difference between steam cleaning and hot water extraction?',
+    a: 'In practice they are the same thing, and "steam cleaning" is a slight misnomer. Hot water extraction sprays hot water and cleaning solution into the fibre under pressure and immediately vacuums it back out. It is not steam in the true sense — actual steam would be too hot for most upholstery.',
+  },
+  {
+    q: 'When do you use a low-moisture method instead?',
+    a: 'On velvet, viscose blends, silk, some linens, S-coded fabrics, and anything that fails a moisture test on a hidden seam. It costs the same. The choice is made after testing the fabric, not before.',
+  },
+  {
+    q: 'Do you use chemicals?',
+    a: 'Yes — cleaning is chemistry, and anyone claiming otherwise is selling something. What matters is which ones and whether they are rinsed out. We use pH-balanced, low-odour products chosen for the fibre, and the rinse step is the one that makes them safe around children and pets.',
+  },
+  {
+    q: 'Why does the order of the steps matter so much?',
+    a: 'Because most failures in this trade are sequencing failures. Wetting before vacuuming turns dry grit into mud. Extracting before the pre-spray has dwelled leaves the oily bond intact. Skipping the drying passes causes browning and slow drying. The individual techniques are not secret; doing all of them, in order, every time, is the job.',
+  },
+];
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'How we clean', item: `${site.domain}/how-we-clean/` },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${site.domain}/how-we-clean/#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<Base
+  title="How We Clean | Our 7-Step Upholstery & Carpet Method"
+  description="The seven-step method we use on every job: fibre testing, dry soil removal, pre-spray and dwell, agitation, hot water extraction, spot work, and controlled drying."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Method"
+    title="How we actually clean things"
+    lede="There is no secret product. There is a sequence, and the discipline to do all of it every time — which is the part that separates a result you notice from one you do not."
+    trail={[{ href: '/how-we-clean/', label: 'How we clean' }]}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <div class="grid gap-12 lg:grid-cols-2">
+      <div class="prose-body">
+        <h2 class="mt-0">Most of the dirt is dry</h2>
+        <p>
+          The single biggest misunderstanding about upholstery and carpet is that the problem is
+          stains. It usually is not. The bulk of what comes out of a sofa or a carpet is dry
+          particulate — skin, hair, fibre, city dust, garden grit — sitting at the base of the pile.
+        </p>
+        <p>
+          That matters because dry soil is abrasive. Every time somebody sits down or walks across a
+          room, grit grinds against fibre. A carpet does not just look dirty as it ages; it is being
+          physically sanded from underneath, and that wear is permanent.
+        </p>
+        <p>
+          It also dictates the method. Dry soil comes out with a vacuum. Introduce water first and
+          you have made mud, and driven it deeper. This is why the vacuuming stage takes longer than
+          people expect, and why skipping it is the most common corner cut in the trade.
+        </p>
+
+        <h2>The bound layer needs chemistry, not pressure</h2>
+        <p>
+          What is left after vacuuming is the oily layer: body oils, cooking residue, hair product,
+          traffic film. That is genuinely bonded to the fibre, and no amount of scrubbing or water
+          pressure will shift it directly.
+        </p>
+        <p>
+          It has to be chemically released first, with an alkaline pre-spray that needs time to work
+          — usually eight to ten minutes of dwell. Rushing that is why a hurried job looks acceptable
+          while it is wet and disappointing once it dries.
+        </p>
+
+        <h2>Then take out more than you put in</h2>
+        <p>
+          Extraction is the part people picture, and it is the least complicated. Hot solution goes
+          in under pressure, dirty solution comes straight back out. The skill is restraint: the
+          target is the least moisture that will do the job, followed by dry passes that recover
+          considerably more than went in.
+        </p>
+        <p>
+          Over-wetting causes nearly every post-clean complaint we get called to fix — browning as
+          soil wicks up from the foam, shrinkage on natural fibres, damp underlay, and a musty smell
+          that appears two days later.
+        </p>
+      </div>
+
+      <div>
+        <div class="grid gap-8">
+          {
+            pairs.map((p) => (
+              <BeforeAfter
+                id={p.id}
+                label={p.label}
+                caption={p.caption}
+                beforeAlt={p.beforeAlt}
+                afterAlt={p.afterAlt}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <MethodRail heading="The seven steps" lede="Every job, domestic or commercial, runs through all seven in this order." />
+
+  <section class="bg-sand-100 py-14 md:py-20">
+    <div class="container-page grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-semibold text-ink-950">What we will not do</h2>
+        <ul class="mt-6 space-y-4">
+          {
+            [
+              'Clean a fabric we cannot safely identify. We test first, and if the answer is no, we say so on the doorstep and do not charge for the visit.',
+              'Promise a stain will disappear when we think it will only reduce. You will get the honest version before you book.',
+              'Mask an odour with fragrance and call it odour removal. If the source cannot be reached, we will tell you what it would actually take.',
+              'Use heat on a protein stain, or bleach on a coloured fabric, to get a quick result that damages the piece.',
+              'Leave a job so wet that it is still damp the next day.',
+            ].map((i) => (
+              <li class="flex items-start gap-3 leading-relaxed text-ink-900">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-ink-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M5 5l10 10M15 5 5 15" />
+                </svg>
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-semibold text-ink-950">Read more on the detail</h2>
+        <ul class="mt-6 space-y-3">
+          {
+            guides.map((g) => (
+              <li>
+                <a
+                  href={`/guides/${g.slug}/`}
+                  class="flex items-start justify-between gap-4 rounded-2xl bg-sand-50 px-5 py-4 ring-1 ring-ink-950/10 hover:ring-ink-950/35"
+                >
+                  <span>
+                    <span class="font-semibold text-ink-950">{g.nav}</span>
+                    <span class="mt-0.5 block text-sm text-ink-700">{g.summary}</span>
+                  </span>
+                  <svg class="mt-1 h-4 w-4 shrink-0 text-ink-600" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" />
+                  </svg>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Faq faqs={faqs} heading="Questions about the method" />
+
+  <CtaBand />
+</Base>

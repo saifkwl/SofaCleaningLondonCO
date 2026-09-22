@@ -1,0 +1,49 @@
+---
+interface Props {
+  rows: { item: string; from: string; note: string }[];
+  note?: string;
+  title?: string;
+}
+const { rows, note, title } = Astro.props;
+---
+
+<div class="overflow-hidden rounded-card border border-ink-950/10 bg-sand-50">
+  {
+    title && (
+      <div class="border-b border-ink-950/10 bg-sand-100 px-6 py-4">
+        <h3 class="font-display text-lg font-semibold text-ink-950">{title}</h3>
+      </div>
+    )
+  }
+  <table class="w-full border-collapse text-left">
+    <caption class="sr-only">Starting prices{title ? ` for ${title}` : ''}</caption>
+    <thead>
+      <tr class="border-b border-ink-950/10 text-[0.7rem] uppercase tracking-[0.14em] text-ink-600">
+        <th scope="col" class="px-6 py-3.5 font-semibold">Item</th>
+        <th scope="col" class="px-6 py-3.5 text-right font-semibold">From</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-ink-950/8">
+      {
+        rows.map((r) => (
+          <tr>
+            <th scope="row" class="px-6 py-4 font-medium text-ink-950">
+              {r.item}
+              <span class="mt-0.5 block text-sm font-normal text-ink-700">{r.note}</span>
+            </th>
+            <td class="whitespace-nowrap px-6 py-4 text-right align-top font-display text-xl font-semibold text-ink-800">
+              {r.from}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  {
+    note && (
+      <p class="border-t border-ink-950/10 bg-sand-100 px-6 py-4 text-sm leading-relaxed text-ink-800">
+        {note}
+      </p>
+    )
+  }
+</div>

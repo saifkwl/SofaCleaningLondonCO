@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site, telHref, whatsappHref, defaultWhatsappMessage } from '../data/site';
+import { areas } from '../data/areas';
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: `${site.domain}/contact/` },
+    ],
+  },
+  {
+    '@type': 'ContactPage',
+    '@id': `${site.domain}/contact/#contact`,
+    mainEntity: { '@id': `${site.domain}/#business` },
+  },
+];
+---
+
+<Base
+  title="Contact Us | Sofa Cleaning London"
+  description={`Call or WhatsApp ${site.phoneDisplay} for sofa, upholstery and carpet cleaning across Greater London. Open every day, 8am to 8pm.`}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Call, message, or send a photo"
+    lede="The fastest route to a price is a photo on WhatsApp. If you would rather talk it through, the phone is answered by someone who does the cleaning."
+    trail={[{ href: '/contact/', label: 'Contact' }]}
+    chips={[site.hours, 'Greater London']}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr]">
+      <div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <a
+            href={telHref}
+            class="flex flex-col justify-between rounded-card border border-ink-950/10 bg-sand-50 p-7 shadow-lift transition-transform hover:-translate-y-1"
+          >
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-ink-950 text-sand-50">
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M2 4.5A2.5 2.5 0 0 1 4.5 2h1.1a1.5 1.5 0 0 1 1.44 1.09l.62 2.16a1.5 1.5 0 0 1-.4 1.5l-.9.87a11.5 11.5 0 0 0 4.52 4.52l.87-.9a1.5 1.5 0 0 1 1.5-.4l2.16.62A1.5 1.5 0 0 1 18 12.9V14a2.5 2.5 0 0 1-2.5 2.5h-.5C7.82 16.5 2 10.68 2 3.5v-.5Z" />
+              </svg>
+            </span>
+            <span class="mt-6 block">
+              <span class="block text-sm font-semibold uppercase tracking-[0.14em] text-ink-600">Phone</span>
+              <span class="mt-1 block font-display text-2xl font-semibold text-ink-950">
+                {site.phoneDisplay}
+              </span>
+            </span>
+          </a>
+
+          <a
+            href={whatsappHref(defaultWhatsappMessage)}
+            rel="noopener"
+            class="flex flex-col justify-between rounded-card border border-ink-950/10 bg-zest-400 p-7 shadow-lift transition-transform hover:-translate-y-1"
+          >
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-ink-950 text-zest-400">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.25.7-1.45 1.33-2 1.4-.53.07-1.18.1-1.9-.12a16 16 0 0 1-1.73-.64 12.3 12.3 0 0 1-4.7-4.16c-.35-.47-1.1-1.56-1.1-2.98 0-1.42.74-2.12 1-2.4.26-.3.57-.37.76-.37h.55c.18 0 .42-.07.65.5l.9 2.16c.07.15.12.33.02.53-.1.2-.15.32-.3.5l-.45.52c-.15.15-.3.31-.13.61.17.3.75 1.24 1.61 2 1.11.99 2.05 1.3 2.34 1.45.3.15.47.13.64-.08l.92-1.07c.2-.25.4-.2.67-.12l2.05.97c.3.15.5.22.57.34.07.12.07.7-.18 1.4Z" />
+              </svg>
+            </span>
+            <span class="mt-6 block">
+              <span class="block text-sm font-semibold uppercase tracking-[0.14em] text-ink-800">WhatsApp</span>
+              <span class="mt-1 block font-display text-2xl font-semibold text-ink-950">
+                Send a photo
+              </span>
+            </span>
+          </a>
+        </div>
+
+        <div class="mt-6 rounded-card border border-ink-950/10 bg-sand-100 p-7">
+          <h2 class="font-display text-xl font-semibold text-ink-950">Opening hours</h2>
+          <p class="mt-2 leading-relaxed text-ink-800">
+            {site.hours}. Evening and weekend appointments are charged at the same rate as weekday
+            ones, and for scheduled commercial work there is no out-of-hours surcharge.
+          </p>
+          <h2 class="mt-7 font-display text-xl font-semibold text-ink-950">Email</h2>
+          <p class="mt-2 leading-relaxed text-ink-800">
+            <a class="underline underline-offset-4" href={`mailto:${site.email}`}>{site.email}</a>
+            {' '}— best for invoices, letting-agent paperwork and commercial enquiries. WhatsApp is
+            considerably faster for quotes.
+          </p>
+          <h2 class="mt-7 font-display text-xl font-semibold text-ink-950">Where we work</h2>
+          <p class="mt-2 leading-relaxed text-ink-800">
+            Greater London. We are a mobile service, so there is no shop to visit — we come to you.
+            See the <a class="underline underline-offset-4" href="/areas/">areas we cover</a>, or
+            just send your postcode.
+          </p>
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {
+              areas.map((a) => (
+                <li>
+                  <a
+                    href={`/areas/${a.slug}/`}
+                    class="rounded-full bg-sand-50 px-3.5 py-2 text-sm font-semibold text-ink-900 ring-1 ring-ink-950/10 hover:ring-ink-950/35"
+                  >
+                    {a.name}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="rounded-card border border-ink-950/10 bg-sand-50 p-7 shadow-lift md:p-10">
+        <h2 class="font-display text-2xl font-semibold text-ink-950">Send us the details</h2>
+        <p class="mt-2 leading-relaxed text-ink-800">
+          This writes your WhatsApp message for you and shows it to you before anything opens.
+        </p>
+        <div class="mt-7">
+          <QuoteForm id="contact-quote" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

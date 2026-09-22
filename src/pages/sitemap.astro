@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+import { guides } from '../data/guides';
+import { site } from '../data/site';
+
+const groups = [
+  {
+    title: 'Main pages',
+    links: [
+      { href: '/', label: 'Home — sofa & upholstery cleaning London' },
+      { href: '/services/', label: 'All services' },
+      { href: '/areas/', label: 'Areas we cover' },
+      { href: '/before-and-after/', label: 'Before & after gallery' },
+      { href: '/prices/', label: 'Prices' },
+      { href: '/how-we-clean/', label: 'How we clean — our method' },
+      { href: '/reviews/', label: 'Customer reviews' },
+      { href: '/guides/', label: 'Guides' },
+      { href: '/about/', label: 'About us' },
+      { href: '/contact/', label: 'Contact' },
+      { href: '/get-a-quote/', label: 'Get a fixed price' },
+    ],
+  },
+  {
+    title: 'Services',
+    links: services.map((s) => ({ href: `/services/${s.slug}/`, label: s.h1 })),
+  },
+  {
+    title: 'Areas we cover',
+    links: areas.map((a) => ({
+      href: `/areas/${a.slug}/`,
+      label: `${a.name} — ${a.postcodes.join(', ')}`,
+    })),
+  },
+  {
+    title: 'Guides',
+    links: guides.map((g) => ({ href: `/guides/${g.slug}/`, label: g.h1 })),
+  },
+  {
+    title: 'Legal',
+    links: [
+      { href: '/privacy/', label: 'Privacy notice' },
+      { href: '/terms/', label: 'Terms of service' },
+    ],
+  },
+];
+
+const total = groups.reduce((n, g) => n + g.links.length, 0);
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.domain}/` },
+      { '@type': 'ListItem', position: 2, name: 'Site index', item: `${site.domain}/sitemap/` },
+    ],
+  },
+];
+---
+
+<Base
+  title="Site Index | Sofa Cleaning London"
+  description="Every page on sofacleaninglondon.co in one list — all services, London area pages, cleaning guides, prices, reviews and contact details."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Site index"
+    title="Everything on this site"
+    lede={`All ${total} pages, in one list. There is also an XML sitemap for search engines at /sitemap-index.xml.`}
+    trail={[{ href: '/sitemap/', label: 'Site index' }]}
+  />
+
+  <section class="container-page py-14 md:py-20">
+    <div class="grid gap-12 md:grid-cols-2">
+      {
+        groups.map((g) => (
+          <nav aria-labelledby={`si-${g.title.replace(/\s+/g, '-').toLowerCase()}`}>
+            <h2
+              id={`si-${g.title.replace(/\s+/g, '-').toLowerCase()}`}
+              class="font-display text-2xl font-semibold text-ink-950"
+            >
+              {g.title}
+            </h2>
+            <ul class="mt-5 space-y-2.5">
+              {g.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="text-ink-800 underline-offset-4 hover:text-ink-950 hover:underline"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+  </section>
+</Base>

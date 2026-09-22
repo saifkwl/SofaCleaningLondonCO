@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+import { site, telHref } from '../data/site';
+---
+
+<Base
+  title="Page not found | Sofa Cleaning London"
+  description="That page does not exist on sofacleaninglondon.co. Here are the services, London areas and contact details people are usually looking for."
+  noindex
+>
+  <section class="container-page py-20 md:py-28">
+    <p class="eyebrow text-ink-600"><span class="h-px w-6 bg-ink-600"></span>404</p>
+    <h1 class="mt-4 text-4xl font-semibold md:text-6xl">That page is not here</h1>
+    <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-800">
+      The link may be old or mistyped. If you were looking for a price or wanted to book, the
+      quickest route is still a photo on WhatsApp.
+    </p>
+    <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+      <a
+        href="/get-a-quote/"
+        class="inline-flex items-center justify-center rounded-full bg-zest-400 px-7 py-4 font-bold text-ink-950"
+      >
+        Get a fixed price
+      </a>
+      <a
+        href={telHref}
+        class="inline-flex items-center justify-center rounded-full border-2 border-ink-950/15 px-7 py-4 font-bold text-ink-950 hover:border-ink-950/45"
+      >
+        Call {site.phoneDisplay}
+      </a>
+    </div>
+
+    <div class="mt-16 grid gap-12 md:grid-cols-2">
+      <nav aria-labelledby="nf-services">
+        <h2 id="nf-services" class="font-display text-xl font-semibold text-ink-950">Services</h2>
+        <ul class="mt-4 space-y-2.5">
+          {
+            services.map((s) => (
+              <li>
+                <a class="text-ink-800 underline-offset-4 hover:underline" href={`/services/${s.slug}/`}>
+                  {s.nav}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <nav aria-labelledby="nf-areas">
+        <h2 id="nf-areas" class="font-display text-xl font-semibold text-ink-950">Areas</h2>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {
+            areas.map((a) => (
+              <li>
+                <a
+                  class="rounded-full bg-sand-100 px-3.5 py-2 text-sm font-semibold text-ink-900 hover:bg-sand-200"
+                  href={`/areas/${a.slug}/`}
+                >
+                  {a.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6">
+          <a class="font-semibold text-ink-800 underline underline-offset-4" href="/sitemap/">
+            See the full site index
+          </a>
+        </p>
+      </nav>
+    </div>
+  </section>
+</Base>
