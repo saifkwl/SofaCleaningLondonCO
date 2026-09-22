@@ -31,3 +31,10 @@ export function whatsappHref(message: string): string {
 
 export const defaultWhatsappMessage =
   "Hi Sofa Cleaning London, I'd like a quote for upholstery cleaning. My postcode is ";
+
+/**
+ * GA4 measurement ID. Set to null to ship the site with no analytics at all —
+ * useful for a client demo or a locale that opts out. The Base layout only
+ * loads gtag.js when this is a real ID, and never on a staging build.
+ */
+export const analyticsId = 'G-8H390QTE7K';

@@ -11,7 +11,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyContactBar from '../components/StickyContactBar.astro';
 import Schema from '../components/Schema.astro';
-import { site } from '../data/site';
+import { site, analyticsId } from '../data/site';
 
 interface Props {
   title: string;
@@ -36,6 +36,10 @@ const ogUrl = new URL(ogImage ?? '/og-default.jpg', site.domain).href;
 const indexingDisabled = import.meta.env.PUBLIC_DISABLE_INDEXING === 'true';
 const robots =
   indexingDisabled || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
+
+// Skip analytics on a staging build so test traffic never reaches the real
+// GA4 property.
+const analyticsEnabled = Boolean(analyticsId) && !indexingDisabled;
 
 const business = {
   '@type': 'HomeAndConstructionBusiness',
@@ -95,6 +99,22 @@ const website = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <Schema schema={[business, website, ...schema]} />
+
+    {
+      analyticsEnabled && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
+          <script define:vars={{ analyticsId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', analyticsId);
+          </script>
+        </>
+      )
+    }
   </head>
   <body class="min-h-screen antialiased">
     <a

@@ -12,7 +12,7 @@ import { site } from '../data/site';
   <PageHero
     eyebrow="Legal"
     title="Privacy notice"
-    lede="Plain English version: this website does not collect anything about you. The quote form builds a message on your own phone and you decide whether to send it."
+    lede="Plain English version: we use Google Analytics to see how many people visit and which pages they read. The quote form itself collects nothing — it builds a message on your own phone and you decide whether to send it."
     trail={[{ href: '/privacy/', label: 'Privacy' }]}
   />
 
@@ -20,13 +20,19 @@ import { site } from '../data/site';
     <article class="prose-body max-w-2xl">
       <h2 class="mt-0">What this website collects</h2>
       <p>
-        Nothing automatically. There is no analytics script, no advertising pixel, no tracking
-        cookie and no third-party embed on these pages. We do not set cookies at all.
+        We use <strong>Google Analytics (GA4)</strong> to understand how many people visit this
+        site, which pages they read, and roughly where visitors are browsing from. Google
+        Analytics sets cookies in your browser to do this, and the resulting data is processed by
+        Google. We do not use it to advertise to you elsewhere, and we do not combine it with the
+        details you send us through the quote form or WhatsApp.
       </p>
       <p>
-        Your web host will keep standard server logs, which typically include IP addresses and
-        requested URLs, for security and diagnostics. That is normal for any website and is not
-        used by us to identify or profile anyone.
+        There is no advertising pixel and no other third-party tracking script on these pages.
+      </p>
+      <p>
+        Your web host will also keep standard server logs, which typically include IP addresses
+        and requested URLs, for security and diagnostics. That is normal for any website and is
+        not used by us to identify or profile anyone.
       </p>
 
       <h2>What the quote form actually does</h2>
@@ -59,6 +65,15 @@ import { site } from '../data/site';
       <p>
         We do not sell your details, share them with marketing companies, or add you to a mailing
         list.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        Google Analytics sets a small number of cookies to distinguish one visitor from another
+        and to remember a session for up to 24 hours. None of them identify you personally, and
+        none are used for advertising. You can block them by adjusting your browser's cookie
+        settings, or by using a browser extension such as an ad blocker — the site works
+        identically either way, since nothing here depends on analytics to function.
       </p>
 
       <h2>How long we keep it</h2>
