@@ -114,3 +114,8 @@ Vercel all detect Astro automatically; set the build command to
 After launch: point `sofacleaninglondon.co` at the host, force HTTPS, pick one of www or non-www
 and redirect the other, then verify the domain in Google Search Console and submit
 `https://sofacleaninglondon.co/sitemap-index.xml`.
+
+## IndexNow (Bing, Yandex)
+
+After every deploy that adds or changes pages, run `npm run indexnow` (whole sitemap) or `npm run indexnow -- /changed-page/` (only those pages) from the repo root.
+The key file `/9ee3fbe53ef5a6036825e8cde53183e7.txt` must stay live; 200 or 202 means the URLs were accepted.
